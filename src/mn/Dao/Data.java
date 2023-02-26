@@ -78,7 +78,6 @@ public class Data<M>{
                 id++;
             }
         }
-        System.out.println("sql "+statement.toString());
         statement.executeUpdate();
         con.close();
     }

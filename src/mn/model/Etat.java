@@ -26,15 +26,14 @@ public class Etat {
     
     public static List<Etat> getAll(){
         ArrayList<Etat> list=new ArrayList<>();
-        list.add(new Etat(0, "Annulé"));
-        list.add(new Etat(1, "En cours"));
+        list.add(new Etat(1, "Non effectué"));
         list.add(new Etat(2,"Effectué"));
+        
         return list;
     }
     public static String of(int etat){
         return switch (etat) {
-            case 0 -> "Annulé";
-            case 1 -> "En cours";
+            case 1 -> "Non effectué";
             default -> "Effectué";
         };
     }

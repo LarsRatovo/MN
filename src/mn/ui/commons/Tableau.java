@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package mn.ui.commons;
+import javax.swing.JTable;
 import mn.Dao.Data;
 
 /**
@@ -30,7 +31,7 @@ public class Tableau<M> extends javax.swing.JPanel  {
         }else{
             this.tmodel=tmodel;
         }
-        this.jTable1.setModel(this.tmodel);
+        this.jTable1.setModel(this.getTmodel());
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -76,4 +77,14 @@ public class Tableau<M> extends javax.swing.JPanel  {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+    public JTable getTable(){
+        return jTable1;
+    }
+
+    /**
+     * @return the tmodel
+     */
+    public TableModel<M> getTmodel() {
+        return tmodel;
+    }
 }

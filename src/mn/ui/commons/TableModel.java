@@ -49,25 +49,28 @@ public class TableModel<M> extends AbstractTableModel{
         }
         this.data=data;
     }
+    public M getObjectOn(int index){
+        return this.getList().get(index);
+    }
     @Override
     public int getRowCount() {
-        return this.list.size();
+        return this.getList().size();
     }
 
     @Override
     public int getColumnCount() {
-        return this.cols.size()+this.methods.size();
+        return this.getCols().size()+this.getMethods().size();
     }
 
     @Override
     public String getColumnName(int columnIndex) {
-        for(Field tmp:cols){
+        for(Field tmp:getCols()){
             View view=tmp.getAnnotation(View.class);
             if(columnIndex==view.rang()){
                 return view.value();
             }
         }
-        for(Method tmp:methods){
+        for(Method tmp:getMethods()){
             View view=tmp.getAnnotation(View.class);
             if(columnIndex==view.rang()){
                 return view.value();
@@ -77,8 +80,8 @@ public class TableModel<M> extends AbstractTableModel{
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        M tempModel=list.get(rowIndex);
-        for(Field tmp:cols){
+        M tempModel=getList().get(rowIndex);
+        for(Field tmp:getCols()){
             View view=tmp.getAnnotation(View.class);
             if(columnIndex==view.rang()){
                 tmp.setAccessible(true);
@@ -89,7 +92,7 @@ public class TableModel<M> extends AbstractTableModel{
                 }
             }
         }
-        for(Method tmp:methods){
+        for(Method tmp:getMethods()){
             View view=tmp.getAnnotation(View.class);
             if(columnIndex==view.rang()){
                 tmp.setAccessible(true);
@@ -104,10 +107,16 @@ public class TableModel<M> extends AbstractTableModel{
     }    
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        for(Field tmp:cols){
+        for(Field tmp:getCols()){
             View view=tmp.getAnnotation(View.class);
             if(columnIndex==view.rang()){
                return view.changeable();
+            }
+        }
+        for(Method tmp:getMethods()){
+            View view=tmp.getAnnotation(View.class);
+            if(columnIndex==view.rang()){
+                return view.changeable();
             }
         }
         return false;
@@ -115,18 +124,75 @@ public class TableModel<M> extends AbstractTableModel{
 
     @Override
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        for(Field tmp:cols){
+        for(Field tmp:getCols()){
             View view=tmp.getAnnotation(View.class);
             if(columnIndex==view.rang()){
                 tmp.setAccessible(true);
                 try {
-                    M model=list.get(rowIndex);
+                    M model=getList().get(rowIndex);
                     tmp.set(model, aValue);
-                    data.update(model);
+                    getData().update(model);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
         }
     }
+
+    /**
+     * @return the cols
+     */
+    public List<Field> getCols() {
+        return cols;
+    }
+
+    /**
+     * @param cols the cols to set
+     */
+    public void setCols(List<Field> cols) {
+        this.cols = cols;
+    }
+
+    /**
+     * @return the methods
+     */
+    public List<Method> getMethods() {
+        return methods;
+    }
+
+    /**
+     * @param methods the methods to set
+     */
+    public void setMethods(List<Method> methods) {
+        this.methods = methods;
+    }
+
+    /**
+     * @return the list
+     */
+    public List<M> getList() {
+        return list;
+    }
+
+    /**
+     * @param list the list to set
+     */
+    public void setList(List<M> list) {
+        this.list = list;
+    }
+
+    /**
+     * @return the data
+     */
+    public Data<M> getData() {
+        return data;
+    }
+
+    /**
+     * @param data the data to set
+     */
+    public void setData(Data<M> data) {
+        this.data = data;
+    }
+    
 }

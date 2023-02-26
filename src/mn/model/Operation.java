@@ -18,32 +18,36 @@ public class Operation {
     String type;
     Double prixSansFrais;
     Double prix;
-    @View(value = "Contact",rang=2)
+    @View(value = "Contact",rang=2,changeable = true)
     String contact;
-    @View(value = "Lieu",rang = 3)
+    @View(value = "Lieu",rang = 3,changeable = true)
     String lieu;
     String dateHeure;
     Integer etat;
-    @View(value = "Obs",rang = 8)
+    @View(value = "Obs",rang = 8,changeable = true)
     String observation;
-    @View(value = "Prix sans frais",rang = 4)
+    @View(value = "Prix sans frais",rang = 4,changeable = true)
     public String formatedPrixSansFrais(){
-        return String.format(Locale.FRANCE,"%,.2f",prixSansFrais);
+        if(type.equals("L")){
+            return String.format(Locale.FRANCE,"%,.0f",prixSansFrais);
+        }else{
+            return "----";
+        }
     }
-    @View(value = "Prix avec frais",rang = 5)
+    @View(value = "Prix avec frais",rang = 5,changeable = true)
     public String formatedPrixAvecFrais(){
-        return String.format(Locale.FRANCE,"%,.2f",prix);
+        if(type.equals("L")){
+            return String.format(Locale.FRANCE,"%,.0f",prix);
+        }else{
+            return "----";
+        }
     }
-    @View(value = "Date et Heure",rang = 6)
+    @View(value = "Date et Heure",rang = 6,changeable = true)
     public String formatedDateTime(){
         SimpleDateFormat format=new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String tmpheuredate=dateHeure.replace("T"," ");
         tmpheuredate+=":00";
         return format.format(Timestamp.valueOf(tmpheuredate));
-    }
-    @View(value = "Etat",rang = 9)
-    public String etat(){
-        return Etat.of(etat);
     }
     public Integer getId() {
         return id;
@@ -161,4 +165,11 @@ public class Operation {
         this.observation = observation;
     }
     
+    @View(value = "Effectuée",rang = 9,changeable = true)
+    public boolean getState(){
+        if(this.etat<2){
+            return false;
+        }
+        return true;
+    }
 }

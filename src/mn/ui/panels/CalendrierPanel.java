@@ -6,6 +6,8 @@ package mn.ui.panels;
 
 import com.github.lgooddatepicker.optionalusertools.DateChangeListener;
 import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultListModel;
@@ -106,13 +108,16 @@ public class CalendrierPanel extends ModelPanel{
     @Override
     public void start() throws Exception {
         initComponents();
+        Data<Livreur> dataLivreur=new Data<>();
+        dataLivreur.init(Livreur.class);
+        List<Livreur> listLivreur=dataLivreur.getAll();
         this.calendrierData=new Data();
         this.calendrierData.init(Calendrier.class);
         this.livreurCalendrierData=new Data();
         this.livreurCalendrierData.init(LivreurCalendrier.class);
         this.datePicker1.setDateToToday();
         setDatePickerAndList();
-        setList();
+        setList(listLivreur);
         this.datePicker1.addDateChangeListener(new DateChangeListener(){
             @Override
             public void dateChanged(DateChangeEvent dce) {
@@ -128,6 +133,44 @@ public class CalendrierPanel extends ModelPanel{
             }
         
         });
+        this.jList1.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount()==2){
+                    int index=jList1.locationToIndex(e.getPoint());
+                    Livreur selected=listLivreur.get(index);
+                    if(!travaille(selected)){
+                       Calendrier c=new Calendrier();
+                       c.setLivreur(selected.getId());
+                       c.setDate(datePicker1.getDateStringOrEmptyString());
+                        try {
+                            calendrierData.save(c);
+                            JOptionPane.showMessageDialog(null,"Calendrier saved");
+                            setDatePickerAndList();
+                            revalidate();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
         this.revalidate();
     }
     
@@ -139,33 +182,11 @@ public class CalendrierPanel extends ModelPanel{
         this.tableau1.init(LivreurCalendrier.class, livreurCalendrierData, customModel);
     }
     
-    private void setList() throws Exception{
-        Data<Livreur> dataLivreur=new Data<>();
-        dataLivreur.init(Livreur.class);
-        List<Livreur> listLivreur=dataLivreur.getAll();
+    private void setList(List<Livreur> listLivreur) throws Exception{
         DefaultListModel listModel=new DefaultListModel();
         listModel.addAll(listLivreur);
         this.jList1.setModel(listModel);
         this.jList1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        this.jList1.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                Livreur selected=listLivreur.get(e.getFirstIndex());
-                if(!travaille(selected)){
-                   Calendrier c=new Calendrier();
-                   c.setLivreur(selected.getId());
-                   c.setDate(datePicker1.getDateStringOrEmptyString());
-                    try {
-                        calendrierData.save(c);
-                        JOptionPane.showMessageDialog(null,"Calendrier saved");
-                        setDatePickerAndList();
-                        revalidate();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            }
-        });
     }
     private boolean travaille(Livreur r){
         for(LivreurCalendrier tmp:livreurjour){

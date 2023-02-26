@@ -6,7 +6,7 @@ package mn.ui;
 
 import mn.ui.commons.listeners.MainSetter;
 import mn.ui.panels.CalendrierPanel;
-import mn.ui.panels.CommandePanel;
+import mn.ui.panels.OperationUI.CommandePanel;
 import mn.ui.panels.FournisseurPanel;
 import mn.ui.panels.LivreurPanel;
 

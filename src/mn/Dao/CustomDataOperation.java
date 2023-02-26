@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import mn.model.Fournisseur;
+import mn.model.Livreur;
 import mn.model.OperationDetail;
 import mn.model.OperationFournisseur;
 
@@ -21,17 +22,26 @@ public class CustomDataOperation extends Data<Operation>{
        super.init(Operation.class);
    }
     public void insert(Operation op,Connection con) throws Exception{
-       String sql="INSERT INTO operation(fournisseur,type,prixSansFrais,prix,contact,lieu,dateHeure,ref,etat) VALUES (?,?,?,?,?,?,?,?,?)";
+       String sql="INSERT INTO operation(fournisseur,type,prixSansFrais,prix,contact,lieu,dateHeure,ref,etat,observation) VALUES (?,?,?,?,?,?,?,?,?,?)";
        PreparedStatement statement=con.prepareStatement(sql);
        statement.setInt(1, op.getFournisseur());
        statement.setString(2,op.getType());
-       statement.setDouble(3,op.getPrixSansFrais());
-       statement.setDouble(4,op.getPrix());
+       if(op.getPrixSansFrais()==null){
+            statement.setDouble(3,0);
+       }else{
+           statement.setDouble(3, op.getPrixSansFrais());
+       }
+       if(op.getPrix()==null){
+        statement.setDouble(4,0);
+       }else{
+                   statement.setDouble(4,op.getPrix());
+       }
        statement.setString(5,op.getContact());
        statement.setString(6,op.getLieu());
        statement.setString(7, op.getDateHeure());
        statement.setString(8, op.getRef());
        statement.setInt(9, op.getEtat());
+       statement.setString(10, op.getObservation());
        statement.executeUpdate();
        statement.close();
    }
@@ -40,6 +50,7 @@ public class CustomDataOperation extends Data<Operation>{
         PreparedStatement statement=con.prepareStatement(sql);
         statement.setInt(1,fournisseur);
         statement.setString(2, date);
+        System.out.println("sql "+statement.toString());
         ResultSet rs=statement.executeQuery();
         rs.next();
         int count=rs.getInt(1);
@@ -47,8 +58,7 @@ public class CustomDataOperation extends Data<Operation>{
         statement.close();
         return count;
     }
-    public List<OperationFournisseur> operationDetails(String date) throws Exception{
-        Connection con=Access.getConnection();
+    public List<OperationFournisseur> operationDetails(String date,Connection con) throws Exception{
         ArrayList<OperationFournisseur> result=new ArrayList();
         CustomDataFournisseur fournisseurData=new CustomDataFournisseur();
         fournisseurData.init(Fournisseur.class);
@@ -69,7 +79,18 @@ public class CustomDataOperation extends Data<Operation>{
         statement.setString(1,date);
         statement.setInt(2,fournisseur);
         ResultSet rs=statement.executeQuery();
-        System.out.println(statement.toString());
         return tmpdata.createList(rs);
+    }
+    public List<Livreur> livreurdu(String date,Connection con) throws Exception{
+        String sql="SELECT * FROM livreur WHERE id IN (SELECT livreur FROM calendrier WHERE DATE(date)=DATE(?))";
+        PreparedStatement statement=con.prepareStatement(sql);
+        statement.setString(1,date);
+        ResultSet rs=statement.executeQuery();
+        Data<Livreur> livs=new Data<>();
+        livs.init(Livreur.class);
+        List<Livreur> lists=livs.createList(rs);
+        rs.close();
+        statement.close();
+        return lists;
     }
 }
