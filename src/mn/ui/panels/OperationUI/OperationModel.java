@@ -35,10 +35,10 @@ public class OperationModel extends TableModel<OperationDetail>{
         try {
             if(aValue!=null){
                 Operation detail=this.getObjectOn(rowIndex).extractOperationFromSelf();
-                if(columnIndex==7){
+                if(columnIndex==8){
                     Livreur livreur=(Livreur)aValue;
                     detail.setLivreur(livreur.getId());
-                }else if (columnIndex==9){
+                }else if (columnIndex==10){
                     if((Boolean)aValue){
                         detail.setEtat(2);
                     }else{

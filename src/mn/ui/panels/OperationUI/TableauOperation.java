@@ -21,9 +21,7 @@ import mn.ui.commons.Tableau;
  * @author Lars Ratovo
  */
 public class TableauOperation extends Tableau<OperationDetail>{
-    CustomDataOperation customData;
     public void init(List<OperationDetail> list,CustomDataOperation data,List<Livreur> livreurs,CommandePanelModel commande) throws Exception{
-        this.customData=data;
         OperationModel model=new OperationModel(list, data,commande);
         this.initdata(model);
         this.more(livreurs);
@@ -48,6 +46,9 @@ public class TableauOperation extends Tableau<OperationDetail>{
         for(Livreur tmp:livreurs){
             combox.addItem(tmp);
         }
-        table.getColumnModel().getColumn(7).setCellEditor(new DefaultCellEditor(combox));
+        table.getColumnModel().getColumn(8).setCellEditor(new DefaultCellEditor(combox));
+        table.getColumnModel().getColumn(1).setPreferredWidth(2);
+        table.getColumnModel().getColumn(7).setPreferredWidth(120);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
     }
 }

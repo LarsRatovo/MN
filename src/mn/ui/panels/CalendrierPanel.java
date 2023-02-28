@@ -125,6 +125,7 @@ public class CalendrierPanel extends ModelPanel{
                     setDatePickerAndList();
                     revalidate();
                 } catch (Exception e) {
+                    JOptionPane.showMessageDialog(mn.MN.frame,e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -146,6 +147,7 @@ public class CalendrierPanel extends ModelPanel{
                             setDatePickerAndList();
                             revalidate();
                         } catch (Exception ex) {
+                            JOptionPane.showMessageDialog(mn.MN.frame,ex.getMessage());
                             ex.printStackTrace();
                         }
                     }

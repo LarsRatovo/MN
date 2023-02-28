@@ -31,19 +31,17 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="fseurnom" min="-2" max="-2" attributes="0"/>
                           <Component id="fseurContact" min="-2" max="-2" attributes="0"/>
                           <Component id="lieuDeRecup" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="Total" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="totalFrais" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="totalSansFrais" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="tableauOperation1" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,13 +64,7 @@
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Component id="lieuDeRecup" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="Total" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="totalSansFrais" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="totalFrais" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="tableauOperation1" max="32767" attributes="0"/>
+                      <Component id="jPanel2" max="32767" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -93,8 +85,6 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="mn.ui.panels.OperationUI.TableauOperation" name="tableauOperation1">
-    </Component>
     <Container class="javax.swing.JPanel" name="jPanel1">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -113,7 +103,7 @@
                       <Component id="restev" max="32767" attributes="0"/>
                       <Component id="jTextField2" alignment="0" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <Component id="rester" min="-2" max="-2" attributes="0"/>
+                          <Component id="diff" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -137,7 +127,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jTextField2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="rester" min="-2" max="-2" attributes="0"/>
+                  <Component id="diff" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="tableau1" pref="556" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -162,8 +152,12 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextField2">
+          <Events>
+            <EventHandler event="inputMethodTextChanged" listener="java.awt.event.InputMethodListener" parameters="java.awt.event.InputMethodEvent" handler="jTextField2InputMethodTextChanged"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextField2KeyReleased"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="rester">
+        <Component class="javax.swing.JLabel" name="diff">
           <Properties>
             <Property name="text" type="java.lang.String" value="Diff&#xe9;rence"/>
           </Properties>
@@ -174,21 +168,11 @@
     </Container>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="JPEG"/>
+        <Property name="text" type="java.lang.String" value="PNG"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="totalFrais">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="TOTAL FRAIS :"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="Total">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="TOTAL : "/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="fseurnom">
       <Properties>
@@ -205,10 +189,66 @@
         <Property name="text" type="java.lang.String" value="LIEU DE RECUP"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="totalSansFrais">
+    <Container class="javax.swing.JPanel" name="jPanel2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="TOTAL SANS FRAIS :"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
       </Properties>
-    </Component>
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="Total" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="totalFrais" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="totalSansFrais" alignment="0" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="tableauOperation1" max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="Total" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="totalSansFrais" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="totalFrais" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="tableauOperation1" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="javax.swing.JLabel" name="Total">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="TOTAL : "/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="totalSansFrais">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="TOTAL SANS FRAIS :"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="totalFrais">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="TOTAL FRAIS :"/>
+          </Properties>
+        </Component>
+        <Component class="mn.ui.panels.OperationUI.TableauOperation" name="tableauOperation1">
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

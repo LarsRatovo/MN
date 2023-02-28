@@ -24,10 +24,7 @@ import mn.Dao.Access;
 import mn.model.Livreur;
 import java.sql.Connection;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
@@ -230,6 +227,7 @@ public class OperationPerLivreur extends CommandePanelModel{
         DefaultListModel model=new DefaultListModel();
         model.addAll(livreurs);
         this.jList1.setModel(model);
+        con.close();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -265,6 +263,7 @@ public class OperationPerLivreur extends CommandePanelModel{
         this.detail=dataop.livreur(liv.getId(), date, con);
         this.tableauOperation1.init(detail, dataop, livreurs, this);
         this.revalidate();
+        con.close();
     }
     @Override
     public void start() throws Exception {
@@ -297,6 +296,7 @@ public class OperationPerLivreur extends CommandePanelModel{
                     }
                 }
                 }catch(Exception e){
+                    JOptionPane.showMessageDialog(mn.MN.frame,e.getMessage());
                     e.printStackTrace();
                 }
                 
@@ -338,7 +338,7 @@ public class OperationPerLivreur extends CommandePanelModel{
                     d.setDepense(formater.parse(aValue.toString()).doubleValue());
                     depenseData.update(d);
                 } catch (Exception ex) {
-                    Logger.getLogger(OperationPerLivreur.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(mn.MN.frame,ex.getMessage());
                 }
             }else{
                 super.setValueAt(aValue, rowIndex, columnIndex);

@@ -199,7 +199,6 @@ public class CommandePanel extends ModelPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String fournisseurValue=fournisseur.getText();
         String dateHeureValeur=dateHeure.toString();
-        System.out.println("Heure "+dateHeureValeur);
         Fournisseur fseur=null;
         try {
             fseur=dataFournisseur.fseur(fournisseurValue);

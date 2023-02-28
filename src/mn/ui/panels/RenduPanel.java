@@ -5,6 +5,10 @@
 package mn.ui.panels;
 
 import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.text.NumberFormat;
 import java.util.List;
@@ -14,14 +18,15 @@ import mn.Dao.Data;
 import mn.model.Depense;
 import mn.model.DepenseDetail;
 import java.sql.Connection;
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import mn.Dao.Access;
 import mn.Dao.CustomDataFournisseur;
 import mn.model.Fournisseur;
 import mn.model.OperationDetail;
 import mn.ui.commons.TableModel;
 import mn.ui.panels.OperationUI.CommandePanelModel;
-import mn.ui.panels.OperationUI.OperationModel;
 
 /**
  *
@@ -31,6 +36,8 @@ public class RenduPanel extends CommandePanelModel {
     Data<DepenseDetail> depensedata;
     CustomDataFournisseur dataf;
     CustomDataOperation dataop;
+    Fournisseur fseur;
+    Double resteVirtuel;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,21 +50,22 @@ public class RenduPanel extends CommandePanelModel {
         datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
         codeInput = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        tableauOperation1 = new mn.ui.panels.OperationUI.TableauOperation();
         jPanel1 = new javax.swing.JPanel();
         frais = new javax.swing.JLabel();
         depense = new javax.swing.JLabel();
         restev = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        rester = new javax.swing.JLabel();
+        diff = new javax.swing.JLabel();
         tableau1 = new mn.ui.commons.Tableau();
         jButton2 = new javax.swing.JButton();
-        totalFrais = new javax.swing.JLabel();
-        Total = new javax.swing.JLabel();
         fseurnom = new javax.swing.JLabel();
         fseurContact = new javax.swing.JLabel();
         lieuDeRecup = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        Total = new javax.swing.JLabel();
         totalSansFrais = new javax.swing.JLabel();
+        totalFrais = new javax.swing.JLabel();
+        tableauOperation1 = new mn.ui.panels.OperationUI.TableauOperation();
 
         jButton1.setText("Chercher");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -74,7 +82,20 @@ public class RenduPanel extends CommandePanelModel {
 
         restev.setText("Reste virtuel");
 
-        rester.setText("Différence");
+        jTextField2.addInputMethodListener(new java.awt.event.InputMethodListener() {
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
+            }
+            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
+                jTextField2InputMethodTextChanged(evt);
+            }
+        });
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+        });
+
+        diff.setText("Différence");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -88,7 +109,7 @@ public class RenduPanel extends CommandePanelModel {
                     .addComponent(restev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(rester)
+                        .addComponent(diff)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -107,22 +128,18 @@ public class RenduPanel extends CommandePanelModel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rester)
+                .addComponent(diff)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tableau1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jButton2.setText("JPEG");
+        jButton2.setText("PNG");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-
-        totalFrais.setText("TOTAL FRAIS :");
-
-        Total.setText("TOTAL : ");
 
         fseurnom.setText("FOURNISSEUR");
 
@@ -130,7 +147,41 @@ public class RenduPanel extends CommandePanelModel {
 
         lieuDeRecup.setText("LIEU DE RECUP");
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        Total.setText("TOTAL : ");
+
         totalSansFrais.setText("TOTAL SANS FRAIS :");
+
+        totalFrais.setText("TOTAL FRAIS :");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Total)
+                            .addComponent(totalFrais)
+                            .addComponent(totalSansFrais))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(tableauOperation1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(Total)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalSansFrais)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalFrais)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tableauOperation1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -150,16 +201,14 @@ public class RenduPanel extends CommandePanelModel {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(fseurnom)
                             .addComponent(fseurContact)
-                            .addComponent(lieuDeRecup)
-                            .addComponent(Total)
-                            .addComponent(totalFrais)
-                            .addComponent(totalSansFrais))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(tableauOperation1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(lieuDeRecup))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,37 +228,86 @@ public class RenduPanel extends CommandePanelModel {
                         .addGap(5, 5, 5)
                         .addComponent(lieuDeRecup)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Total)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(totalSansFrais)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(totalFrais)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tableauOperation1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        Connection con=null;
         try {
-            Connection con=Access.getConnection();
+            con=Access.getConnection();
             setList(con);
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(mn.MN.frame,e.getMessage());
             e.printStackTrace();
+        }finally{
+            try {
+                if(con!=null){
+                    con.close();
+                }
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(mn.MN.frame,e.getMessage());
+            }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+try {
+        JFileChooser chooser=new JFileChooser();
+        chooser.showSaveDialog(null);
+        File file=chooser.getSelectedFile();
+        File headerfile=new File("header.png");
+        BufferedImage header=ImageIO.read(headerfile);
+        BufferedImage bi=new BufferedImage(header.getWidth(),this.tableauOperation1.getTable().getHeight()+this.tableauOperation1.getTable().getTableHeader().getHeight()+header.getHeight(),BufferedImage.TYPE_INT_RGB);
+        Graphics g=bi.getGraphics();
+        g.drawImage(header,0,0,null);
+        g.setColor(Color.BLUE);
+        Font f=new Font(Font.DIALOG,Font.PLAIN,20);
+        g.setFont(f);
+        g.drawString(fseur.getCode(),5,25);
+        g.drawString(fseur.getNom()+" "+fseur.getPrenom(), 5,50);
+        g.drawString(fseur.getRecuperation(), 5,75);
+        g.translate(0,header.getHeight());
+        tableauOperation1.getTable().getTableHeader().paint(g);
+        g.translate(0, tableauOperation1.getTable().getTableHeader().getHeight());
+        tableauOperation1.getTable().paint(g);
+        g.dispose();
+            ImageIO.write(bi,"png", file);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(mn.MN.frame,ex.getMessage());
+            ex.printStackTrace();
+        }
+        JOptionPane.showMessageDialog(null,"Fait!");
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField2InputMethodTextChanged(java.awt.event.InputMethodEvent evt) {//GEN-FIRST:event_jTextField2InputMethodTextChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2InputMethodTextChanged
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+        // TODO add your handling code here:
         try {
-            JFileChooser chooser=new JFileChooser();
-            chooser.showSaveDialog(mn.MN.frame);
-            File file=chooser.getSelectedFile();
+            if(!jTextField2.getText().isBlank()){
+                Double reste=Double.valueOf(jTextField2.getText());
+                Double difference=resteVirtuel-reste;
+                diff.setText(String.format(Locale.FRANCE,"%,.0f",Math.abs(difference)));
+                if(difference==0){
+                    diff.setForeground(Color.GREEN);
+                }else if(difference>0){
+                    diff.setForeground(Color.ORANGE);
+                }else{
+                    diff.setForeground(Color.RED);
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            diff.setText("Not a number");
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+        this.revalidate();
+    }//GEN-LAST:event_jTextField2KeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -217,15 +315,16 @@ public class RenduPanel extends CommandePanelModel {
     private javax.swing.JTextField codeInput;
     private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JLabel depense;
+    private javax.swing.JLabel diff;
     private javax.swing.JLabel frais;
     private javax.swing.JLabel fseurContact;
     private javax.swing.JLabel fseurnom;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lieuDeRecup;
-    private javax.swing.JLabel rester;
     private javax.swing.JLabel restev;
     private mn.ui.commons.Tableau tableau1;
     private mn.ui.panels.OperationUI.TableauOperation tableauOperation1;
@@ -236,19 +335,29 @@ public class RenduPanel extends CommandePanelModel {
         String date=this.datePicker1.getDateStringOrEmptyString();
         DepenseDetail tmp=new DepenseDetail();
         tmp.setDate(date);
+        Connection con=null;
         try {
             List<DepenseDetail> deps=depensedata.findByExample(tmp);
             CustomModel model=new CustomModel(deps,DepenseDetail.class, depensedata);
             this.tableau1.initdata(model);
-            Connection con=Access.getConnection();
+            con=Access.getConnection();
             Double depenseSomme=this.dataop.depenseTotal(date, con);
             Double fraisSomme=this.dataop.fraisTotal(date, con);
             this.depense.setText("DEPENSE : "+String.format(Locale.FRANCE,"%,.0f",depenseSomme)+" Ar");
             this.frais.setText("FRAIS : "+String.format(Locale.FRANCE,"%,.0f",fraisSomme)+" Ar");
-            this.restev.setText("RESTE VIRTUEL : "+String.format(Locale.FRANCE,"%,.0f",fraisSomme-depenseSomme)+" Ar");
-            con.close();
+            resteVirtuel=fraisSomme-depenseSomme;
+            this.restev.setText("RESTE VIRTUEL : "+String.format(Locale.FRANCE,"%,.0f",resteVirtuel)+" Ar");
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(mn.MN.frame,e.getMessage());
             e.printStackTrace();
+        }finally{
+            if(con!=null){
+            try {
+                con.close();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(mn.MN.frame,e.getMessage());
+            }
+        }
         }
     }
     @Override
@@ -271,9 +380,8 @@ public class RenduPanel extends CommandePanelModel {
          try {
             String date=this.datePicker1.getDateStringOrEmptyString();
             String code=this.codeInput.getText();
-            Fournisseur fseur=dataf.fseur(code, con);
+            fseur=dataf.fseur(code, con);
             List<OperationDetail> ops=dataop.detailOf(fseur.getId(),date, con);
-            OperationModel model=new OperationModel(ops, dataf, this);
             this.tableauOperation1.init(ops, dataop,dataop.livreurdu(date, con), this);
             this.fseurnom.setText(fseur.getCode()+" "+fseur.getNom()+" "+fseur.getPrenom());
             this.fseurContact.setText(fseur.getContact());
@@ -281,10 +389,14 @@ public class RenduPanel extends CommandePanelModel {
             this.Total.setText("TOTAL : "+String.format(Locale.FRANCE,"%,.0f",dataop.total(fseur.getId(), date, con))+" Ar");
             this.totalFrais.setText("TOTAL FRAIS : "+String.format(Locale.FRANCE,"%,.0f",dataop.fraisTotal(fseur.getId(), date, con))+" Ar");
             this.totalSansFrais.setText("TOTAL SANS FRAIS : "+String.format(Locale.FRANCE,"%,.0f",dataop.totalSansFrais(fseur.getId(), date, con))+" Ar");
-            con.close();
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(mn.MN.frame,e.getMessage());
             e.printStackTrace();
-        }
+        }finally{
+             if(con!=null){
+                 con.close();
+             }
+         }
     }
     
      private class CustomModel extends TableModel<DepenseDetail>{
@@ -307,6 +419,7 @@ public class RenduPanel extends CommandePanelModel {
                     super.setValueAt(aValue, rowIndex, columnIndex);
                 }
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(mn.MN.frame,e.getMessage());
                 e.printStackTrace();
             }finally{
                 setToDate();
