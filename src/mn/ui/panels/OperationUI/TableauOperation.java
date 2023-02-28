@@ -22,7 +22,7 @@ import mn.ui.commons.Tableau;
  */
 public class TableauOperation extends Tableau<OperationDetail>{
     CustomDataOperation customData;
-    public void init(List<OperationDetail> list,CustomDataOperation data,List<Livreur> livreurs,CommandePanel commande) throws Exception{
+    public void init(List<OperationDetail> list,CustomDataOperation data,List<Livreur> livreurs,CommandePanelModel commande) throws Exception{
         this.customData=data;
         OperationModel model=new OperationModel(list, data,commande);
         this.initdata(model);
@@ -37,8 +37,8 @@ public class TableauOperation extends Tableau<OperationDetail>{
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c= super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 switch (getTmodel().getObjectOn(row).getEtat()) {
-                    case 2 -> c.setBackground(Color.GREEN);
-                    default -> c.setBackground(new Color(235,184,184));
+                    case 2 -> c.setBackground(new Color(133,193,233));
+                    default -> c.setBackground(Color.YELLOW);
                 }
                 return c;
             }

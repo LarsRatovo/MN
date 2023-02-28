@@ -3,16 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package mn.ui.panels;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.sql.Connection;
-import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import mn.Dao.Access;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 import mn.Dao.CustomDataFournisseur;
 import mn.Dao.CustomDataOperation;
 import mn.model.Fournisseur;
@@ -240,8 +234,9 @@ public class CommandePanel extends ModelPanel {
         }
     }//GEN-LAST:event_jButton1ActionPerformed
     private void setList() throws Exception{
+        Connection con=Access.getConnection();
         String dateofDay=date.toString();
-        for(OperationFournisseur tmp:this.dataOperation.operationDetails(dateofDay)){
+        for(OperationFournisseur tmp:this.dataOperation.operationDetails(dateofDay,con)){
             CommandeClient clt=new CommandeClient();
             clt.set(tmp);
             clt.revalidate();

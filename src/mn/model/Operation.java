@@ -1,6 +1,8 @@
 package mn.model;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import mn.Dao.annotation.Key;
 import mn.Dao.annotation.Table;
@@ -28,26 +30,16 @@ public class Operation {
     String observation;
     @View(value = "Prix sans frais",rang = 4,changeable = true)
     public String formatedPrixSansFrais(){
-        if(type.equals("L")){
-            return String.format(Locale.FRANCE,"%,.0f",prixSansFrais);
-        }else{
-            return "----";
-        }
+        return String.format(Locale.FRANCE,"%,.0f",prixSansFrais);
     }
     @View(value = "Prix avec frais",rang = 5,changeable = true)
     public String formatedPrixAvecFrais(){
-        if(type.equals("L")){
-            return String.format(Locale.FRANCE,"%,.0f",prix);
-        }else{
-            return "----";
-        }
+        return String.format(Locale.FRANCE,"%,.0f",prix);
     }
     @View(value = "Date et Heure",rang = 6,changeable = true)
     public String formatedDateTime(){
-        SimpleDateFormat format=new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String tmpheuredate=dateHeure.replace("T"," ");
-        tmpheuredate+=":00";
-        return format.format(Timestamp.valueOf(tmpheuredate));
+        LocalDateTime datetime=LocalDateTime.parse(dateHeure);
+        return datetime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
     }
     public Integer getId() {
         return id;
@@ -148,7 +140,7 @@ public class Operation {
         this.etat = etat;
     }
     public void setRef(Integer count){
-        this.ref=String.valueOf(fournisseur)+"-"+(count+1);
+        this.ref="MN"+String.valueOf(fournisseur)+"-"+(count);
     }
 
     /**
@@ -171,5 +163,8 @@ public class Operation {
             return false;
         }
         return true;
+    }
+    public LocalDateTime getDateTime(){
+        return LocalDateTime.parse(dateHeure);
     }
 }

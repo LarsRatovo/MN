@@ -166,7 +166,9 @@ public class TableModel<M> extends AbstractTableModel{
     public void setMethods(List<Method> methods) {
         this.methods = methods;
     }
-
+    public M getModel(int index){
+        return this.list.get(index);
+    }
     /**
      * @return the list
      */

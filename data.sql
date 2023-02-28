@@ -36,6 +36,7 @@ CREATE DATABASE mn;
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         livreur INTEGER NOT NULL,
         depense DOUBLE PRECISION NOT NULL,
+	designation VARCHAR(50) NOT NULL,
         date DATE NOT NULL,
         FOREIGN KEY (livreur) REFERENCES livreur(id)
     );

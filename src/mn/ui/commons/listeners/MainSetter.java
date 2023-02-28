@@ -24,14 +24,18 @@ public class MainSetter implements ActionListener{
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.main.removeAll();
         try {
+            this.main.removeAll();
+            this.main.repaint();
+            this.main.revalidate();
+            this.main.add(replacement);
+            this.replacement.removeAll();
             this.replacement.start();
+            this.main.repaint();
+            this.main.revalidate();
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-        this.main.add(replacement);
-        this.main.revalidate();
     }
     
 }

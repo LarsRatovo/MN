@@ -4,24 +4,28 @@
  */
 package mn.ui.panels.OperationUI;
 
+import java.lang.reflect.Field;
 import java.text.NumberFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import java.sql.Connection;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import mn.Dao.Access;
 import mn.Dao.Data;
 import mn.model.Livreur;
 import mn.model.Operation;
 import mn.model.OperationDetail;
 import mn.ui.commons.TableModel;
+import mn.ui.commons.View;
 
 /**
  *
  * @author Lars Ratovo
  */
 public class OperationModel extends TableModel<OperationDetail>{
-    CommandePanel commandePanel;
-    public OperationModel(List<OperationDetail> list, Data data,CommandePanel main) {
+    CommandePanelModel commandePanel;
+    public OperationModel(List<OperationDetail> list, Data data,CommandePanelModel main) {
         super(list, OperationDetail.class, data);
         this.commandePanel=main;
     }
@@ -46,6 +50,21 @@ public class OperationModel extends TableModel<OperationDetail>{
                 }else if(columnIndex==5){
                     NumberFormat format=NumberFormat.getInstance();
                     detail.setPrix(format.parse(aValue.toString()).doubleValue());
+                }else if(columnIndex==6){
+                    LocalDateTime dateTime=LocalDateTime.parse(aValue.toString(), DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
+                    detail.setDateHeure(dateTime.toString());
+                }else{
+                        for(Field tmp:getCols()){
+                        View view=tmp.getAnnotation(View.class);
+                        if(columnIndex==view.rang()){
+                            tmp.setAccessible(true);
+                            try {
+                                tmp.set(detail, aValue);
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                    }
                 }
                 Data<Operation> op=new Data<>();
                 op.init(Operation.class);

@@ -14,13 +14,12 @@ import mn.Dao.CustomDataOperation;
 import mn.model.Fournisseur;
 import mn.model.Operation;
 import mn.model.OperationFournisseur;
-import mn.ui.commons.ModelPanel;
 
 /**
  *
  * @author lars
  */
-public class CommandePanel extends ModelPanel {
+public class CommandePanel extends CommandePanelModel {
     CustomDataFournisseur dataFournisseur;
     CustomDataOperation dataOperation;
     /**
@@ -237,6 +236,7 @@ public class CommandePanel extends ModelPanel {
             JOptionPane.showMessageDialog(null,"Valeur non pris en charge");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+    @Override
     public void setList(Connection con) throws Exception{
         String dateofDay=date.toString();
         this.md.removeAll();

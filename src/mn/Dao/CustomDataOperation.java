@@ -46,7 +46,7 @@ public class CustomDataOperation extends Data<Operation>{
        statement.close();
    }
     public int countMax(Integer fournisseur,String date,Connection con) throws Exception{
-        String sql="SELECT COUNT(*) FROM operation WHERE fournisseur = ? AND DATE(dateHeure)=DATE(?)";
+        String sql="SELECT COUNT(*) FROM operation WHERE fournisseur = ? AND DATE(dateHeure)=DATE(?) AND type='L'";
         PreparedStatement statement=con.prepareStatement(sql);
         statement.setInt(1,fournisseur);
         statement.setString(2, date);
@@ -56,6 +56,7 @@ public class CustomDataOperation extends Data<Operation>{
         int count=rs.getInt(1);
         rs.close();
         statement.close();
+        System.out.println("Count : "+count);
         return count;
     }
     public List<OperationFournisseur> operationDetails(String date,Connection con) throws Exception{
@@ -78,6 +79,17 @@ public class CustomDataOperation extends Data<Operation>{
         PreparedStatement statement=con.prepareStatement(sql);
         statement.setString(1,date);
         statement.setInt(2,fournisseur);
+        ResultSet rs=statement.executeQuery();
+        return tmpdata.createList(rs);
+    }
+    public List<OperationDetail> livreur(Integer livreur,String date,Connection con) throws Exception{
+        Data<OperationDetail> tmpdata=new Data<>();
+        tmpdata.init(OperationDetail.class);
+        String sql="SELECT * FROM full_operation WHERE DATE(dateHeure)=DATE(?) AND livreur=? ORDER BY dateHeure";
+        PreparedStatement statement=con.prepareStatement(sql);
+        statement.setString(1,date);
+        statement.setInt(2,livreur);
+        System.out.println(statement.toString());
         ResultSet rs=statement.executeQuery();
         return tmpdata.createList(rs);
     }

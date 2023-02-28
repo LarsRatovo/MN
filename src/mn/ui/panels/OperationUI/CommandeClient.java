@@ -6,6 +6,7 @@ package mn.ui.panels.OperationUI;
 import java.util.List;
 import mn.Dao.CustomDataOperation;
 import mn.model.Livreur;
+import mn.model.OperationDetail;
 import mn.model.OperationFournisseur;
 
 /**
@@ -20,7 +21,7 @@ public class CommandeClient extends javax.swing.JPanel {
     public CommandeClient() {
         initComponents();
     }
-    public void set(OperationFournisseur opfseur,CustomDataOperation data,List<Livreur> livreurs,CommandePanel commandePanel) throws Exception{
+    public void set(OperationFournisseur opfseur,CustomDataOperation data,List<Livreur> livreurs,CommandePanelModel commandePanel) throws Exception{
         this.nom.setText(opfseur.getFournisseur().getCode()+" "+opfseur.getFournisseur().getNom()+" "+opfseur.getFournisseur().getPrenom()+" "+opfseur.getFournisseur().getContact()+" "+opfseur.getFournisseur().getRecuperation());
         this.tableauOperation1.init(opfseur.getOperations(), data,livreurs,commandePanel);
         this.revalidate();
@@ -71,4 +72,5 @@ public class CommandeClient extends javax.swing.JPanel {
     private javax.swing.JLabel nom;
     private mn.ui.panels.OperationUI.TableauOperation tableauOperation1;
     // End of variables declaration//GEN-END:variables
+
 }
