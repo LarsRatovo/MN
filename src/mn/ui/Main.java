@@ -10,6 +10,7 @@ import mn.ui.panels.OperationUI.CommandePanel;
 import mn.ui.panels.FournisseurPanel;
 import mn.ui.panels.LivreurPanel;
 import mn.ui.panels.OperationPerLivreur;
+import mn.ui.panels.RenduPanel;
 
 /**
  *
@@ -27,6 +28,7 @@ public class Main extends javax.swing.JPanel {
         this.bcalendrier.addActionListener(new MainSetter(this.main,new CalendrierPanel()));
         this.bcommande.addActionListener(new MainSetter(this.main,new CommandePanel()));
         this.bcompterendulivreur.addActionListener(new MainSetter(this.main,new OperationPerLivreur()));
+        this.bcompterendu.addActionListener(new MainSetter(this.main,new RenduPanel()));
     }
 
     /**

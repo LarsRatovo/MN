@@ -36,7 +36,7 @@ CREATE DATABASE mn;
         id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
         livreur INTEGER NOT NULL,
         depense DOUBLE PRECISION NOT NULL,
-	designation VARCHAR(50) NOT NULL,
+	    designation VARCHAR(50) NOT NULL,
         date DATE NOT NULL,
         FOREIGN KEY (livreur) REFERENCES livreur(id)
     );
@@ -55,3 +55,6 @@ CREATE DATABASE mn;
 
 CREATE VIEW full_operation AS
 SELECT op.*,l.nom nomlivreur FROM operation op LEFT JOIN livreur l ON op.livreur=l.id;
+
+CREATE VIEW full_depense AS
+SELECT dp.*,l.nom nomlivreur,l.prenom prenomlivreur FROM depenses dp JOIN livreur l ON dp.livreur=l.id;

@@ -326,11 +326,9 @@ public class OperationPerLivreur extends CommandePanelModel{
         setLivreur();
     }
     private class CustomModel extends TableModel<Depense>{
-        
         public CustomModel(List<Depense> list, Class<Depense> type, Data data) {
             super(list, type, data);
         }
-
         @Override
         public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
             Depense d=this.getModel(rowIndex);
@@ -346,7 +344,5 @@ public class OperationPerLivreur extends CommandePanelModel{
                 super.setValueAt(aValue, rowIndex, columnIndex);
             }
         }
-        
-        
     }
 }

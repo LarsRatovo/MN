@@ -89,7 +89,6 @@ public class CustomDataOperation extends Data<Operation>{
         PreparedStatement statement=con.prepareStatement(sql);
         statement.setString(1,date);
         statement.setInt(2,livreur);
-        System.out.println(statement.toString());
         ResultSet rs=statement.executeQuery();
         return tmpdata.createList(rs);
     }
@@ -104,5 +103,58 @@ public class CustomDataOperation extends Data<Operation>{
         rs.close();
         statement.close();
         return lists;
+    }
+    public Double depenseTotal(String date,Connection con) throws Exception{
+        String sql="SELECT SUM(depense)FROM depenses WHERE DATE(date)=DATE(?)";
+        PreparedStatement statement=con.prepareStatement(sql);
+        statement.setString(1,date);
+        ResultSet rs=statement.executeQuery();
+        Double somme=rs.getDouble(1);
+        rs.close();
+        statement.close();
+        return somme;
+    }
+    public Double fraisTotal(String date,Connection con) throws Exception{
+        String sql="SELECT SUM(prix)-SUM(prixSansFrais) FROM operation WHERE DATE(dateHeure)=DATE(?) AND etat=2";
+        PreparedStatement statement=con.prepareStatement(sql);
+        statement.setString(1,date);
+        ResultSet rs=statement.executeQuery();
+        Double somme=rs.getDouble(1);
+        rs.close();
+        statement.close();
+        return somme;
+    }
+    public Double totalSansFrais(Integer fseur,String date,Connection con) throws Exception{
+        String sql="SELECT SUM(prixSansFrais) FROM operation WHERE fournisseur=? AND DATE(dateHeure)=DATE(?) AND etat=2";
+        PreparedStatement statement=con.prepareStatement(sql);
+        statement.setInt(1,fseur);
+        statement.setString(2,date);
+        ResultSet rs=statement.executeQuery();
+        Double total=rs.getDouble(1);
+        rs.close();
+        statement.close();
+        return total;
+    }
+    public Double total(Integer fseur,String date,Connection con) throws Exception{
+        String sql="SELECT SUM(prix) FROM operation WHERE fournisseur=? AND DATE(dateHeure)=DATE(?) AND etat=2";
+        PreparedStatement statement=con.prepareStatement(sql);
+        statement.setInt(1,fseur);
+        statement.setString(2,date);
+        ResultSet rs=statement.executeQuery();
+        Double total=rs.getDouble(1);
+        rs.close();
+        statement.close();
+        return total;
+    }
+    public Double fraisTotal (Integer fseur,String date,Connection con) throws Exception{
+        String sql="SELECT SUM(prix)-SUM(prixSansFrais) FROM operation WHERE fournisseur=? AND DATE(dateHeure)=DATE(?) AND etat=2";
+        PreparedStatement statement=con.prepareStatement(sql);
+        statement.setInt(1,fseur);
+        statement.setString(2,date);
+        ResultSet rs=statement.executeQuery();
+        Double total=rs.getDouble(1);
+        rs.close();
+        statement.close();
+        return total; 
     }
 }

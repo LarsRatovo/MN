@@ -4,7 +4,8 @@
  */
 package mn;
 
-import java.awt.Toolkit;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import mn.ui.Main;
 
@@ -13,18 +14,23 @@ import mn.ui.Main;
  * @author Lars Ratovo
  */
 public class MN {
-
+    public static JFrame frame;
+    public MN(){
+        GraphicsEnvironment graphics =GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice device = graphics.getDefaultScreenDevice();
+        frame=new JFrame();
+        frame.setUndecorated(true);
+        frame.setResizable(false);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Main m=new Main();
+        frame.add(m);
+        frame.revalidate();
+        device.setFullScreenWindow(frame);
+    }
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception{
-        JFrame frame=new JFrame();
-        frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        Main m=new Main();
-        frame.add(m);
-        frame.revalidate();
+        MN mn=new MN();
     }    
 }

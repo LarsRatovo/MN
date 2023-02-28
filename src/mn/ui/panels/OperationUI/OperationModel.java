@@ -82,7 +82,7 @@ public class OperationModel extends TableModel<OperationDetail>{
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if(columnIndex!=9){
+        if(columnIndex!=10){
             return super.getColumnClass(columnIndex); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/OverriddenMethodBody
         }
         return Boolean.class;

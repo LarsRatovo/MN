@@ -31,6 +31,17 @@ public class CustomDataFournisseur extends Data<Fournisseur>{
         con.close();
         return fseur;
     }
+    public Fournisseur fseur(String code,Connection con) throws Exception{
+        String sql="SELECT * FROM fournisseur WHERE UPPER('MN'||id)=UPPER(?)";
+        PreparedStatement statement=con.prepareStatement(sql);
+        statement.setString(1, code);
+        ResultSet rs=statement.executeQuery();
+        List<Fournisseur> data=this.createList(rs);
+        Fournisseur fseur=data.get(0);
+        rs.close();
+        statement.close();
+        return fseur;
+    }
     public List<Fournisseur> fseurof(String date,Connection con) throws Exception{
         String sql="SELECT * FROM fournisseur WHERE id IN (SELECT fournisseur FROM operation WHERE DATE(dateHeure)=DATE(?))";
         PreparedStatement statement=con.prepareStatement(sql);

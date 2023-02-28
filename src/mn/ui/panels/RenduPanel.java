@@ -4,19 +4,33 @@
  */
 package mn.ui.panels;
 
+import com.github.lgooddatepicker.zinternaltools.DateChangeEvent;
+import java.io.File;
+import java.text.NumberFormat;
+import java.util.List;
+import java.util.Locale;
+import mn.Dao.CustomDataOperation;
+import mn.Dao.Data;
+import mn.model.Depense;
+import mn.model.DepenseDetail;
+import java.sql.Connection;
+import javax.swing.JFileChooser;
+import mn.Dao.Access;
+import mn.Dao.CustomDataFournisseur;
+import mn.model.Fournisseur;
+import mn.model.OperationDetail;
+import mn.ui.commons.TableModel;
+import mn.ui.panels.OperationUI.CommandePanelModel;
+import mn.ui.panels.OperationUI.OperationModel;
+
 /**
  *
  * @author lars
  */
-public class RenduPanel extends javax.swing.JPanel {
-
-    /**
-     * Creates new form RenduPanel
-     */
-    public RenduPanel() {
-        initComponents();
-    }
-
+public class RenduPanel extends CommandePanelModel {
+    Data<DepenseDetail> depensedata;
+    CustomDataFournisseur dataf;
+    CustomDataOperation dataop;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,30 +41,40 @@ public class RenduPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
-        jTextField1 = new javax.swing.JTextField();
+        codeInput = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         tableauOperation1 = new mn.ui.panels.OperationUI.TableauOperation();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        frais = new javax.swing.JLabel();
+        depense = new javax.swing.JLabel();
+        restev = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        rester = new javax.swing.JLabel();
         tableau1 = new mn.ui.commons.Tableau();
+        jButton2 = new javax.swing.JButton();
+        totalFrais = new javax.swing.JLabel();
+        Total = new javax.swing.JLabel();
+        fseurnom = new javax.swing.JLabel();
+        fseurContact = new javax.swing.JLabel();
+        lieuDeRecup = new javax.swing.JLabel();
+        totalSansFrais = new javax.swing.JLabel();
 
-        jTextField1.setText("jTextField1");
-
-        jButton1.setText("jButton1");
+        jButton1.setText("Chercher");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setText("Total frais");
+        frais.setText("Total frais");
 
-        jLabel2.setText("Total dépense");
+        depense.setText("Total dépense");
 
-        jLabel3.setText("Reste virtuel");
+        restev.setText("Reste virtuel");
 
-        jLabel4.setText("Différence");
+        rester.setText("Différence");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -59,12 +83,12 @@ public class RenduPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(frais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(depense, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(restev, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(rester)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -75,64 +99,218 @@ public class RenduPanel extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(frais)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(depense)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
+                .addComponent(restev)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
+                .addComponent(rester)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tableau1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(tableau1, javax.swing.GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        jButton2.setText("JPEG");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        totalFrais.setText("TOTAL FRAIS :");
+
+        Total.setText("TOTAL : ");
+
+        fseurnom.setText("FOURNISSEUR");
+
+        fseurContact.setText("CONTACT");
+
+        lieuDeRecup.setText("LIEU DE RECUP");
+
+        totalSansFrais.setText("TOTAL SANS FRAIS :");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(codeInput, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGap(156, 156, 156))
-            .addGroup(layout.createSequentialGroup()
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addGap(75, 75, 75))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tableauOperation1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(fseurnom)
+                            .addComponent(fseurContact)
+                            .addComponent(lieuDeRecup)
+                            .addComponent(Total)
+                            .addComponent(totalFrais)
+                            .addComponent(totalSansFrais))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(tableauOperation1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(codeInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tableauOperation1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(fseurnom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(fseurContact)
+                        .addGap(5, 5, 5)
+                        .addComponent(lieuDeRecup)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Total)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalSansFrais)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(totalFrais)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tableauOperation1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            Connection con=Access.getConnection();
+            setList(con);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        try {
+            JFileChooser chooser=new JFileChooser();
+            chooser.showSaveDialog(mn.MN.frame);
+            File file=chooser.getSelectedFile();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Total;
+    private javax.swing.JTextField codeInput;
     private com.github.lgooddatepicker.components.DatePicker datePicker1;
+    private javax.swing.JLabel depense;
+    private javax.swing.JLabel frais;
+    private javax.swing.JLabel fseurContact;
+    private javax.swing.JLabel fseurnom;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JLabel lieuDeRecup;
+    private javax.swing.JLabel rester;
+    private javax.swing.JLabel restev;
     private mn.ui.commons.Tableau tableau1;
     private mn.ui.panels.OperationUI.TableauOperation tableauOperation1;
+    private javax.swing.JLabel totalFrais;
+    private javax.swing.JLabel totalSansFrais;
     // End of variables declaration//GEN-END:variables
+    private void setToDate(){
+        String date=this.datePicker1.getDateStringOrEmptyString();
+        DepenseDetail tmp=new DepenseDetail();
+        tmp.setDate(date);
+        try {
+            List<DepenseDetail> deps=depensedata.findByExample(tmp);
+            CustomModel model=new CustomModel(deps,DepenseDetail.class, depensedata);
+            this.tableau1.initdata(model);
+            Connection con=Access.getConnection();
+            Double depenseSomme=this.dataop.depenseTotal(date, con);
+            Double fraisSomme=this.dataop.fraisTotal(date, con);
+            this.depense.setText("DEPENSE : "+String.format(Locale.FRANCE,"%,.0f",depenseSomme)+" Ar");
+            this.frais.setText("FRAIS : "+String.format(Locale.FRANCE,"%,.0f",fraisSomme)+" Ar");
+            this.restev.setText("RESTE VIRTUEL : "+String.format(Locale.FRANCE,"%,.0f",fraisSomme-depenseSomme)+" Ar");
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public void start() throws Exception {
+        initComponents();
+        dataop=new CustomDataOperation();
+        dataf=new CustomDataFournisseur();
+        this.depensedata=new Data();
+        depensedata.init(DepenseDetail.class);
+        this.datePicker1.setDateToToday();
+        setToDate();
+        this.datePicker1.addDateChangeListener((DateChangeEvent dce) -> {
+            setToDate();
+            revalidate();
+        });
+    }
+
+    @Override
+    public void setList(Connection con) throws Exception {
+         try {
+            String date=this.datePicker1.getDateStringOrEmptyString();
+            String code=this.codeInput.getText();
+            Fournisseur fseur=dataf.fseur(code, con);
+            List<OperationDetail> ops=dataop.detailOf(fseur.getId(),date, con);
+            OperationModel model=new OperationModel(ops, dataf, this);
+            this.tableauOperation1.init(ops, dataop,dataop.livreurdu(date, con), this);
+            this.fseurnom.setText(fseur.getCode()+" "+fseur.getNom()+" "+fseur.getPrenom());
+            this.fseurContact.setText(fseur.getContact());
+            this.lieuDeRecup.setText(fseur.getRecuperation());
+            this.Total.setText("TOTAL : "+String.format(Locale.FRANCE,"%,.0f",dataop.total(fseur.getId(), date, con))+" Ar");
+            this.totalFrais.setText("TOTAL FRAIS : "+String.format(Locale.FRANCE,"%,.0f",dataop.fraisTotal(fseur.getId(), date, con))+" Ar");
+            this.totalSansFrais.setText("TOTAL SANS FRAIS : "+String.format(Locale.FRANCE,"%,.0f",dataop.totalSansFrais(fseur.getId(), date, con))+" Ar");
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+     private class CustomModel extends TableModel<DepenseDetail>{
+        public CustomModel(List<DepenseDetail> list, Class<DepenseDetail> type, Data data) {
+            super(list, type, data);
+        }
+
+        @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            try {
+                Data<Depense> dataDept=new Data<>();
+                dataDept.init(Depense.class);
+                Depense d=this.getModel(rowIndex);
+                if(columnIndex==1){
+                    NumberFormat formater=NumberFormat.getInstance(Locale.FRANCE);
+                    d.setDepense(formater.parse(aValue.toString()).doubleValue());
+                    dataDept.update(d);
+                }else{
+                    super.setData(depensedata);
+                    super.setValueAt(aValue, rowIndex, columnIndex);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }finally{
+                setToDate();
+            }
+        }
+    }
 }

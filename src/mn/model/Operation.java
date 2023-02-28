@@ -26,7 +26,7 @@ public class Operation {
     String lieu;
     String dateHeure;
     Integer etat;
-    @View(value = "Obs",rang = 8,changeable = true)
+    @View(value = "Obs",rang = 9,changeable = true)
     String observation;
     @View(value = "Prix sans frais",rang = 4,changeable = true)
     public String formatedPrixSansFrais(){
@@ -36,7 +36,11 @@ public class Operation {
     public String formatedPrixAvecFrais(){
         return String.format(Locale.FRANCE,"%,.0f",prix);
     }
-    @View(value = "Date et Heure",rang = 6,changeable = true)
+    @View(value = "Frais",rang = 6)
+    public String formatedFrais(){
+        return String.format(Locale.FRANCE,"%,.0f",prix-prixSansFrais);
+    }
+    @View(value = "Date et Heure",rang = 7,changeable = true)
     public String formatedDateTime(){
         LocalDateTime datetime=LocalDateTime.parse(dateHeure);
         return datetime.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
@@ -157,7 +161,7 @@ public class Operation {
         this.observation = observation;
     }
     
-    @View(value = "Effectuée",rang = 9,changeable = true)
+    @View(value = "Effectuée",rang = 10,changeable = true)
     public boolean getState(){
         if(this.etat<2){
             return false;

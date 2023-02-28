@@ -11,7 +11,7 @@ import mn.ui.commons.View;
  * @author Lars Ratovo
  */
 public class OperationDetail extends Operation{
-    @View(value = "Livreur",rang = 7,changeable = true)
+    @View(value = "Livreur",rang = 8,changeable = true)
     String nomlivreur;
 
     /**

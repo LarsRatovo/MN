@@ -37,7 +37,7 @@ public class Docs {
         this.main=livreur;
         output=new Document();
         filename=LocalDateTime.now().toString()+".pdf";
-        File fl=new File(filename);
+        File fl=new File(filename.replace(".","."));
         path=fl.getAbsolutePath();
         outputStream=new FileOutputStream(fl);
         PdfWriter.getInstance(output, outputStream);
