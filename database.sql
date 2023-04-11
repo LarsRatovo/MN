@@ -26,7 +26,8 @@ CREATE DATABASE mn;
     CREATE TABLE delivery
     (
         id SERIAL NOT NULL PRIMARY KEY ,
-        provide INTEGER NOT NULL REFERENCES provider(id),
+        provider INTEGER NOT NULL REFERENCES provider(id),
+        ref VARCHAR(50) NOT NULL ,
         date_delivery TIMESTAMP NOT NULL,
         deliver INTEGER DEFAULT NULL REFERENCES deliver(id),
         place VARCHAR(100) NOT NULL ,
@@ -41,5 +42,6 @@ CREATE DATABASE mn;
     (
         deliver INTEGER NOT NULL REFERENCES deliver(id),
         date_spent DATE NOT NULL ,
+        reason VARCHAR(100) NOT NULL ,
         amount DOUBLE PRECISION
     );

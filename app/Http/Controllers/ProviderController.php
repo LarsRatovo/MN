@@ -9,10 +9,7 @@ class ProviderController extends Controller
 {
     public function save(Request $request)
     {
-        $provider= new Provider();
-        $provider->fill(json_decode($request->getContent(),true));
-        $provider->save();
-        return $provider;
+        return Provider::create(json_decode($request->getContent(),true));
     }
     public function paginate(){
         return Provider::simplePaginate(10);
@@ -23,6 +20,6 @@ class ProviderController extends Controller
     }
     public function update(Request $request){
         $arr=json_decode($request->getContent(),true);
-        return Provider::where('id',$arr['id'])->update(json_decode($request->getContent(),true));
+        return Provider::where('id',$arr['id'])->update($arr);
     }
 }

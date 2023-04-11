@@ -15,4 +15,7 @@ class Deliver extends Model
       "surname",
       "contact"
     ];
+    public function deliveries(){
+        return $this->hasMany(Delivery::class,"deliver");
+    }
 }

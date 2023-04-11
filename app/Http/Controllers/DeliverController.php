@@ -8,10 +8,7 @@ use Illuminate\Http\Request;
 class DeliverController extends Controller
 {
     function save(Request $request){
-        $deliver=new Deliver();
-        $deliver->fill(json_decode($request->getContent(),true));
-        $deliver->save();
-        return $deliver;
+        return Deliver::create(json_decode($request->getContent(),true));
     }
     function paginate(){
         return Deliver::Simplepaginate(10);

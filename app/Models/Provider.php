@@ -12,9 +12,15 @@ class Provider extends Model
     public $timestamps=false;
     protected $primaryKey="id";
     protected $fillable=[
+        "id",
+        "ref",
         "name",
         "surname",
         "recovery",
-        "contact"
+        "contact",
+        "deliveries"
     ];
+    public function deliveries(){
+        return $this->hasMany(Delivery::class,"provider");
+    }
 }

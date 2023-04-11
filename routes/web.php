@@ -36,3 +36,18 @@ Route::controller(\App\Http\Controllers\CalendarController::class)->group(functi
     Route::get("/calendar",'paginate');
     Route::delete("/calendar","remove");
 });
+
+Route::controller(\App\Http\Controllers\DeliveryController::class)->group(function (){
+    Route::post("/deliveries",'save');
+    Route::post("/providers/deliveries",'provider_deliveries');
+    Route::put("/deliveries",'update');
+    Route::delete("/deliveries/{id}",'remove');
+    Route::post("/providers/{id}/deliveries","providers");
+    Route::post("/delivers/{id}/deliveries","deliver_deliveries");
+});
+
+Route::controller(\App\Http\Controllers\SpentController::class)->group(function (){
+    Route::post("/spents",'save');
+    Route::post("/spents/date",'perDate');
+    Route::post("/spents/deliver/{id}",'perDateAndDeliver');
+});
