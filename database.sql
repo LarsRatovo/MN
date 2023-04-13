@@ -1,5 +1,3 @@
-CREATE DATABASE mn;
-    \c mn
     CREATE SEQUENCE id_provider;
     CREATE TABLE provider
     (
