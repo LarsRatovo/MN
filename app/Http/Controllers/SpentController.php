@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deliver;
 use App\Models\Spent;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class   SpentController extends Controller
 {
@@ -11,13 +14,43 @@ class   SpentController extends Controller
         return Spent::create(json_decode($request->getContent(),true));
     }
     function update(Request $request){
-        $arr=json_decode($request->getContent());
-        return Spent::where("deliver","=",$arr["id"])->where("date_spent","=",$arr["date_spent"])->update($arr);
+        $arr=json_decode($request->getContent(),true);
+        unset($arr['owner']);
+        return Spent::where("deliver","=",$arr["deliver"])->where("date_spent","=",$arr["date_spent"])->update($arr);
     }
-    function perDate(Request $request){
-        return Spent::where("date_spent","=",$request->get("date_spent"))->get();
+    function load(Request $request){
+        $date=$request->get("date");
+        if($date==null){
+            $date=date("Y-m-d");
+        }
+        $delivers=Deliver::all();
+        $spent=Spent::where("date_spent","=",$date)->get();
+        foreach ($spent as $p){
+            $p->owner;
+        }
+        return Inertia::render("Spent",[
+            "spents"=>$spent,
+            "delivers"=>$delivers
+        ]);
     }
-    function perDateAndDeliver($id,Request $request){
-        return Spent::where("date_spent","=",$request->get("date_spent"))->where("deliver","=",$id)->get();
+    function perDateAndDeliver(Request $request){
+        $id=$request->get("deliver");
+        $date=$request->get("date");
+        if($date==null){
+            $date=date("Y-m-d");
+        }
+        $spent= Spent::where("date_spent","=",$date);
+        if(!blank($id)){
+            $spent=$spent->where("deliver","=",$id);
+        }
+        $delivers=Deliver::all();
+        $spent=$spent->get();
+        foreach ($spent as $p){
+            $p->owner;
+        }
+        return Inertia::render("Spent",[
+            "spents"=>$spent,
+            "delivers"=>$delivers
+        ]);
     }
 }

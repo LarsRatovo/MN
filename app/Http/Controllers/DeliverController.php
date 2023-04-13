@@ -4,14 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Deliver;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class DeliverController extends Controller
 {
     function save(Request $request){
         return Deliver::create(json_decode($request->getContent(),true));
     }
-    function paginate(){
-        return Deliver::Simplepaginate(10);
+    function all():Response{
+        return Inertia::render("Delivers",[
+            "delivers"=>Deliver::all()
+        ]);
     }
     function update(Request $request){
         $arr=json_decode($request->getContent(),true);

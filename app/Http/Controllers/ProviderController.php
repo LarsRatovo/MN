@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Provider;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ProviderController extends Controller
 {
@@ -11,8 +13,10 @@ class ProviderController extends Controller
     {
         return Provider::create(json_decode($request->getContent(),true));
     }
-    public function paginate(){
-        return Provider::simplePaginate(10);
+    public function all():Response{
+        return Inertia::render("Providers",[
+            "providers"=>Provider::all()
+        ]);
     }
     public function search(Request $request){
         $name="%".$request->get("name")."%";

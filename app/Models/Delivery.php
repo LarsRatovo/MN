@@ -17,6 +17,7 @@ class Delivery extends Model
         "place",
         "contact",
         "price",
+        "deliver",
         "fee",
         "type",
         "stat",
