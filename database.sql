@@ -44,7 +44,7 @@
         amount DOUBLE PRECISION
     );
     CREATE VIEW fee_price AS
-    SELECT SUM(fee) fee,SUM(price) price,DATE(date_delivery) FROM delivery GROUP BY DATE(date_delivery);
+    SELECT SUM(fee) fee,SUM(price) price,DATE(date_delivery) FROM delivery WHERE stat=3 OR stat=1 GROUP BY DATE(date_delivery);
 
     CREATE VIEW spent_date AS
     SELECT SUM(amount) spent,date_spent FROM spent GROUP BY date_spent;

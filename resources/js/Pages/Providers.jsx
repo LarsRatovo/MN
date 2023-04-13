@@ -5,9 +5,11 @@ import {Head} from "@inertiajs/react";
 export default function Providers({providers}) {
     const [provider,setProvider]=useState({});
     const update=(provider,name,value)=>{
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
         provider[name]=value;
         axios.put("/providers",provider).then(response=>
-            alert("Update done")
+            modal.style.display="none"
         );
     }
     const set=(event)=>{
@@ -18,10 +20,12 @@ export default function Providers({providers}) {
         });
     }
     const submit=(event)=>{
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
         event.preventDefault();
         console.log(JSON.stringify(provider));
         axios.post("/providers",provider).then(response=>{
-                alert("Provider saved");
+                modal.style.display="none";
                 location.reload();
         }
         );
@@ -47,7 +51,7 @@ export default function Providers({providers}) {
                             <label className="form-label livreures">&nbsp;
                                 <input type="text" className="field" name={"contact"} placeholder="Contact" onChange={set}/>
                                 <input type="text" className="field" name={"recovery"} placeholder="Lieu de recuperation" onChange={set}/>
-                            <button className="btn btn-primary btn-save" type="submit">Sauvegarde</button>
+                            <button className="btn btn-primary btn-save" type="submit" onClick={(event)=>{this.disabled=true}}>Sauvegarde</button>
                             </label>
                         </div>
                     </div>

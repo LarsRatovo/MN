@@ -11,8 +11,11 @@ export default function Deliveries({providers,delivers}){
     const urlsearch=new URLSearchParams(new URL(window.location.href).search);
     const submit=(event)=>{
         event.preventDefault();
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
         axios.post("/deliveries",delivery)
             .then(response=>{
+                    modal.style.display="none";
                     if(response.status===401){
                         alert("No provider found");
                     }else if(response.status===201){

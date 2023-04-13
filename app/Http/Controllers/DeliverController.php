@@ -14,7 +14,7 @@ class DeliverController extends Controller
     }
     function all():Response{
         return Inertia::render("Delivers",[
-            "delivers"=>Deliver::all()
+            "delivers"=>Deliver::select("*")->orderBy("id")->get()
         ]);
     }
     function update(Request $request){

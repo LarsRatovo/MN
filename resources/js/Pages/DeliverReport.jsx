@@ -39,7 +39,7 @@ export default function DeliverReport({delivers,deliver,deliveries,date}){
                                             <option value={deliver.id}>{deliver.surname+" "+deliver.name}</option>
                                         )}
                                     </select>
-                                    <button className="btn btn-primary field" type="submit">Submit</button>
+                                    <button className="btn btn-primary" type="submit">Submit</button>
                                 </label>
                             </div>
                             </form>

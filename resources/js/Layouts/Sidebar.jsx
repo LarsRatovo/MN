@@ -1,3 +1,5 @@
+import Modal from "@/Components/Modal";
+
 export default function Sidebar({children}) {
     return (
         <>
@@ -42,6 +44,7 @@ export default function Sidebar({children}) {
                 <div className="d-flex flex-column" id="content-wrapper">
                     <main>{children}</main>
                 </div>
+                <Modal/>
             </div>
             <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
             <script src="/assets/js/bs-init.js"></script>

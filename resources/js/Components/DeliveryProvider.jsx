@@ -18,9 +18,11 @@ export default function DeliveryProvider({providers, delivers}) {
     return (
         <>
             {providers.map(provider =>
-                <div className="card-body card-livraison" onDoubleClick={(event=>{
-                    axios.get("/report/img");
-                })}>
+                <div className="card-body card-livraison">
+                    <form action={"/report/image"} method={"post"}>
+                        <input type={"hidden"} name={"data"} value={JSON.stringify(provider)}/>
+                        <button className="btn btn-primary" type="submit">png</button>
+                    </form>
                     <div className="row">
                         <div
                             className="col-md-6 col-lg-11 col-xl-12 d-xl-flex justify-content-xl-start align-items-xl-center">

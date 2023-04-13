@@ -34,6 +34,7 @@ Route::controller(\App\Http\Controllers\DeliveryController::class)->group(functi
     Route::get("/report/deliver","load_deliver_deliveries");
     Route::post("/report/deliver","deliver_deliveries");
     Route::post("/report/deliver/pdf","toPdf");
+    Route::post("/report/image","img");
 });
 
 Route::controller(\App\Http\Controllers\DeliverController::class)->group(function (){

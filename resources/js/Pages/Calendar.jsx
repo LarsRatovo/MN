@@ -6,17 +6,19 @@ export default function Calendar({calendar,date}){
         location.href="/calendar?date="+event.target.value;
     }
     const calendarChanger=(id,event)=>{
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
         let calendar={
             deliver:id,
             date_work:date
         }
         if(event.target.checked){
             axios.post("/calendar",calendar).then(response=>{
-                alert("Calendar added");
+                modal.style.display="none";
             });
         }else {
             axios.put("/calendar",calendar).then(response=>{
-                alert("Calendar removed");
+                modal.style.display="none";
             });
         }
     }

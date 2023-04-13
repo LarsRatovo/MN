@@ -5,9 +5,11 @@ import {useState} from "react";
 export default function Delivers({delivers}){
     const [deliver,setDeliver]=useState({});
     const update=(deliver,name,value)=>{
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
         deliver[name]=value;
         axios.put("/delivers",deliver).then(response=>
-            alert("Update done")
+            modal.style.display="none"
         );
     }
     const set=(event)=>{
@@ -19,9 +21,11 @@ export default function Delivers({delivers}){
     }
     const submit=(event)=>{
         event.preventDefault();
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
         console.log(JSON.stringify(deliver));
         axios.post("/delivers",deliver).then(response=>{
-                alert("Delivers saved");
+                modal.style.display="none";
                 location.reload();
             }
         );

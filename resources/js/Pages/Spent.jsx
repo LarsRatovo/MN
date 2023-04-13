@@ -12,12 +12,16 @@ export default function Spent({delivers,spents}){
         });
     }
     const update=(spent,colname,value)=>{
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
         spent[colname]=value;
-        axios.put("/spent",spent).then(result=>alert("Update saved"));
+        axios.put("/spent",spent).then(result=>modal.style.display="none");
     }
     const save=(event)=>{
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
         event.preventDefault();
-        axios.post("/spent",spentDeliver).then(result=>{alert("Spent saved");location.reload();});
+        axios.post("/spent",spentDeliver).then(result=>{alert("Spent saved");modal.style.display="none";location.reload();});
     }
     const show=()=>{
         let somme=0;

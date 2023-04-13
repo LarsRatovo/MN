@@ -20,10 +20,11 @@ export default function Delivery({deliveries, delivers}) {
     const color = ['#F96969', '#EFF545', 'white', '#95AEDA'];
     const update = (delivery, columnName, value) => {
         delivery[columnName]=value;
-        console.log(JSON.stringify(delivery));
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
         axios.put("/deliveries", delivery).
         then(response=>{
-            alert("Update saved");
+            modal.style.display="none";
             location.reload();
         });
     }

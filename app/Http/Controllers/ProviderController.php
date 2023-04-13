@@ -15,7 +15,7 @@ class ProviderController extends Controller
     }
     public function all():Response{
         return Inertia::render("Providers",[
-            "providers"=>Provider::all()
+            "providers"=>Provider::select("*")->orderBy("id")->get()
         ]);
     }
     public function search(Request $request){
