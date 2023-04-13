@@ -10,15 +10,17 @@ export default function Report({date, providers, report,delivers}) {
         location.href="/report?date="+event.target.value;
     }
     const diff=(event)=>{
-        let real_remainder=parseInt(event.target.value);
-        let remainder=report.stayed-real_remainder;
-        document.getElementById("diff").innerHTML=remainder;
-        if(remainder===0){
-            document.getElementById("diff").style.color="green";
-        }else if(remainder<=0){
-            document.getElementById("diff").style.color="red";
-        }else{
-            document.getElementById("diff").style.color="orange";
+        if(report[0]){
+            let real_remainder=parseInt(event.target.value);
+            let remainder=report[0].stayed-real_remainder;
+            document.getElementById("diff").innerHTML=remainder;
+            if(remainder===0){
+                document.getElementById("diff").style.color="green";
+            }else if(remainder<=0){
+                document.getElementById("diff").style.color="red";
+            }else{
+                document.getElementById("diff").style.color="orange";
+            }
         }
     }
     const show=(report)=>{
