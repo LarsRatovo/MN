@@ -4,14 +4,14 @@ export default function Sidebar({children}) {
     return (
         <>
             <header>
-                <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css"/>
+                <link rel="stylesheet" href="https://mn-production.up.railway.app/assets/bootstrap/css/bootstrap.min.css"/>
                 <link rel="stylesheet"
                       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap"/>
-                <link rel="stylesheet" href="/assets/fonts/fontawesome-all.min.css"/>
-                <link rel="stylesheet" href="/assets/css/Dark-NavBar-Navigation-with-Button.css"/>
-                <link rel="stylesheet" href="/assets/css/Dark-NavBar-Navigation-with-Search.css"/>
-                <link rel="stylesheet" href="/assets/css/Dark-NavBar.css"/>
-                <link rel="stylesheet" href="/assets/css/edit.css"/>
+                <link rel="stylesheet" href="https://mn-production.up.railway.app/assets/fonts/fontawesome-all.min.css"/>
+                <link rel="stylesheet" href="https://mn-production.up.railway.app/assets/css/Dark-NavBar-Navigation-with-Button.css"/>
+                <link rel="stylesheet" href="https://mn-production.up.railway.app/assets/css/Dark-NavBar-Navigation-with-Search.css"/>
+                <link rel="stylesheet" href="https://mn-production.up.railway.app/assets/css/Dark-NavBar.css"/>
+                <link rel="stylesheet" href="https://mn-production.up.railway.app/assets/css/edit.css"/>
             </header>
             <div id="wrapper">
                 <nav
@@ -46,9 +46,9 @@ export default function Sidebar({children}) {
                 </div>
                 <Modal/>
             </div>
-            <script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-            <script src="/assets/js/bs-init.js"></script>
-            <script src="/assets/js/theme.js"></script>
+            <script src="https://mn-production.up.railway.app/assets/bootstrap/js/bootstrap.min.js"></script>
+            <script src="https://mn-production.up.railway.app/assets/js/bs-init.js"></script>
+            <script src="https://mn-production.up.railway.app/assets/js/theme.js"></script>
         </>
     );
 }
