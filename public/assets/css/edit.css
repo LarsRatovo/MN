@@ -170,3 +170,9 @@
     to {top:0; opacity:1}
 }
 .modal-body {padding: 2px 16px;}
+.suggestion{
+    border: dashed;
+}
+.suggest:hover{
+    background: #c2cbe5;
+}

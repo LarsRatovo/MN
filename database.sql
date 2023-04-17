@@ -34,7 +34,7 @@
         fee DOUBLE PRECISION NOT NULL CHECK ( fee>0 ),
         type VARCHAR(1) NOT NULL CHECK ( type='R' OR type='L' ),
         stat INTEGER NOT NULL CHECK ( stat>=0 AND stat<=3 ),
-        observation VARCHAR(150) NOT NULL
+        observation VARCHAR(150)
     );
     CREATE TABLE spent
     (
@@ -43,11 +43,21 @@
         reason VARCHAR(100) NOT NULL ,
         amount DOUBLE PRECISION
     );
-    CREATE VIEW fee_price AS
-    SELECT SUM(fee) fee,SUM(price) price,DATE(date_delivery) FROM delivery WHERE stat=3 OR stat=1 GROUP BY DATE(date_delivery);
+    CREATE VIEW fee AS
+    SELECT SUM(fee) fee,DATE(date_delivery) FROM delivery WHERE stat=3 OR stat=1 GROUP BY DATE(date_delivery);
+
+    CREATE VIEW price AS
+    SELECT SUM(price) price,DATE(date_delivery) FROM delivery WHERE stat=1 GROUP BY DATE(date_delivery);
 
     CREATE VIEW spent_date AS
     SELECT SUM(amount) spent,date_spent FROM spent GROUP BY date_spent;
 
+    CREATE VIEW pre_report AS
+        SELECT 0 fee,0 price,spent,date_spent date FROM spent_date
+        UNION
+        SELECT fee ,0 price,0 spent ,date FROM fee
+        UNION
+        SELECT 0 fee,price,0 spent, date FROM price;
+
     CREATE VIEW report AS
-    SELECT fp.fee,fp.price,fp.fee-sd.spent stayed,sd.spent,fp.date FROM fee_price fp JOIN spent_date sd ON fp.date=sd.date_spent;
+        SELECT SUM(fee) fee,SUM(price) price,SUM(spent) spent,SUM(fee)-SUM(spent) stayed,date FROM pre_report GROUP BY date;

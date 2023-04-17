@@ -25,6 +25,49 @@ export default function Deliveries({providers,delivers}){
                 }
             );
     }
+    const changeprovider=(event)=>{
+        let {name,value}=event.target;
+        axios.post("/providers/name?name="+value).
+        then(result=>{
+            let ul=document.createElement("ul");
+            ul.className="suggestion";
+            let listable=document.getElementById("listable");
+            for(let i=0;i<listable.children.length;i++){
+                if(listable.children.item(i).tagName==="UL"){
+                    listable.removeChild(listable.children.item(i));
+                }
+            }
+            listable.appendChild(ul);
+            for(let i=0;i<result.data.length;i++){
+                let provider=result.data[i];
+                let li=document.createElement("li");
+                li.className="suggest";
+                li.innerHTML=provider.ref;
+                li.onclick=((ev)=>{
+                    for(let i=0;i<listable.children.length;i++){
+                        if(listable.children.item(i).tagName==="UL"){
+                            listable.removeChild(listable.children.item(i));
+                        }
+                    }
+                    event.target.value=li.innerHTML;
+                    if(document.getElementById("type").value==='R'){
+                        setDelivery({
+                            ...delivery,
+                            provider:provider.ref,
+                            place:provider.recovery
+                        })
+                        document.getElementById("place").value=provider.recovery;
+                    }else{
+                        setDelivery({
+                            ...delivery,
+                            provider:provider.ref
+                        });
+                    }
+                })
+                ul.appendChild(li);
+            }
+        });
+    }
     const change=(event)=>{
         let {name,value}=event.target;
         setDelivery({
@@ -35,6 +78,24 @@ export default function Deliveries({providers,delivers}){
     const changeDate=(event)=>{
         window.location.href="/test?date="+event.target.value;
     };
+    const autofill=(event,provider)=>{
+        let ref=document.getElementById("provider");
+        ref.value=provider.ref;
+        if(document.getElementById("type").value==='R'){
+            setDelivery({
+               ...delivery,
+                provider:provider.ref,
+               place:provider.recovery
+            });
+            document.getElementById("place").value=provider.recovery;
+        }else{
+            setDelivery({
+                ...delivery,
+                provider:provider.ref
+            });
+        }
+        window.location.href=window.location.href+"#form";
+    }
     return(
         <Sidebar>
             <Head title={"Deliveries"} />
@@ -49,10 +110,15 @@ export default function Deliveries({providers,delivers}){
                                 <div className="container-fluid">
                                     <form className="d-flex justify-content-xl-center add-livraison" style={{minWidth: '100%',minHeight: '100%'}} onSubmit={submit}>
                                         <div className="container">
-                                            <div className="row">
+                                            <div className="row" id={"form"}>
                                                 <div className="col-md-3">
-                                                    <div><input className="form-control" type="text" name={"provider"} onChange={change} placeholder="Fournisseur"/>
-                                                        <input className="form-control" type="text" name={"place"} onChange={change} placeholder="Lieu"/></div>
+                                                    <select className="form-select" name={"type"} id={"type"} onChange={change}>
+                                                        <option value="R">R</option>
+                                                        <option value="L">L</option>
+                                                    </select>
+                                                    <div>
+                                                        <div id={"listable"}><input className="form-control" type="text" id={"provider"} name={"provider"} onChange={changeprovider} placeholder="Fournisseur"/></div>
+                                                    </div>
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
@@ -67,10 +133,7 @@ export default function Deliveries({providers,delivers}){
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
-                                                        <select className="form-select" name={"type"} onChange={change}>
-                                                            <option value="R">R</option>
-                                                            <option value="L">L</option>
-                                                        </select>
+                                                        <input className="form-control" type="text" name={"place"} id={"place"} onChange={change} placeholder="Lieu"/>
                                                         <select className="form-select" name={"stat"} onChange={change}>
                                                             <option value="2">En cours</option>
                                                             <option value="0">Annule</option>
@@ -95,7 +158,7 @@ export default function Deliveries({providers,delivers}){
                                 <div className="card-body card-livraison">
                                     <div className="row">
                                         <div className="col-md-6 col-lg-11 col-xl-12 d-xl-flex justify-content-xl-start align-items-xl-center">
-                                            <p className="user-info">{provider.ref}</p>
+                                            <p className="user-info" onDoubleClick={(event)=>{autofill(event,provider)}}>{provider.ref}</p>
                                         </div>
                                         <div className="col">
                                             <p className="user-info">{provider.surname}</p>

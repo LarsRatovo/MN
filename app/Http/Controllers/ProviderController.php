@@ -20,7 +20,7 @@ class ProviderController extends Controller
     }
     public function search(Request $request){
         $name="%".$request->get("name")."%";
-        return Provider::where("name","ilike",$name)->orWhere("surname","ilike",$name)->get();
+        return Provider::where("name","ilike",$name)->orWhere("surname","ilike",$name)->orWhere("ref","ilike",$name)->orWhere("recovery","ilike",$name)->get();
     }
     public function update(Request $request){
         $arr=json_decode($request->getContent(),true);

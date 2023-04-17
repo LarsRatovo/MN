@@ -25,6 +25,7 @@ Route::controller(\App\Http\Controllers\ProviderController::class)->group(functi
     Route::get("/providers","all");
     Route::post("/providers","save");
     Route::put("/providers","update");
+    Route::post("/providers/name","search");
 });
 
 Route::controller(\App\Http\Controllers\DeliveryController::class)->group(function (){
