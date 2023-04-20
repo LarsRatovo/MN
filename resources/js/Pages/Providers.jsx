@@ -8,7 +8,7 @@ export default function Providers({providers}) {
         var modal = document.getElementById("myModal");
         modal.style.display="block";
         provider[name]=value;
-        axios.put("/providers",provider).then(response=>
+        axios.put("/providers?tk="+localStorage.getItem("tk"),provider).then(response=>
             modal.style.display="none"
         );
     }
@@ -24,7 +24,7 @@ export default function Providers({providers}) {
         modal.style.display="block";
         event.preventDefault();
         console.log(JSON.stringify(provider));
-        axios.post("/providers",provider).then(response=>{
+        axios.post("/providers?tk="+localStorage.getItem("tk"),provider).then(response=>{
                 modal.style.display="none";
                 location.reload();
         }

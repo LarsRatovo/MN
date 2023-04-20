@@ -22,7 +22,7 @@ export default function Delivery({deliveries, delivers}) {
         delivery[columnName]=value;
         var modal = document.getElementById("myModal");
         modal.style.display="block";
-        axios.put("/deliveries", delivery).
+        axios.put("/deliveries?tk="+localStorage.getItem("tk"), delivery).
         then(response=>{
             modal.style.display="none";
             location.reload();

@@ -7,7 +7,7 @@ export default function Report({date, providers, report,delivers}) {
     const [vardate,setVardate]=useState(date);
     const changeDate=(event)=>{
         setVardate(event.target.value);
-        location.href="/report?date="+event.target.value;
+        location.href="/report?date="+event.target.value+"&tk="+localStorage.getItem("tk");
     }
     const diff=(event)=>{
         if(report[0]){

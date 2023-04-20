@@ -33,6 +33,7 @@ export default function DeliverReport({delivers,deliver,deliveries,date}){
                             <div className="d-flex contain">
                                 <label className="form-label d-flex livreures">
                                     <input className="field" type="date" defaultValue={date} name={"date"}/>
+                                    <input type={"hidden"} name={"tk"} value={localStorage.getItem("tk")}/>
                                     &nbsp;
                                     <select className="field" name={"id"}>
                                         {delivers.map(deliver=>
@@ -47,6 +48,7 @@ export default function DeliverReport({delivers,deliver,deliveries,date}){
                                 <label className="form-label livreures">&nbsp;
                                     <form action={"/report/deliver/pdf"} method={"post"}>
                                         <input type={"hidden"} name={"data"} value={JSON.stringify({deliver:deliver,deliveries:deliveries})}/>
+                                        <input type={"hidden"} name={"tk"} value={localStorage.getItem("tk")}/>
                                         <button className="btn btn-primary field" type="submit">To pdf</button>
                                     </form>
                                 </label>

@@ -43,6 +43,20 @@
         reason VARCHAR(100) NOT NULL ,
         amount DOUBLE PRECISION
     );
+    CREATE TABLE users
+    (
+        id SERIAL NOT NULL PRIMARY KEY ,
+        username VARCHAR(100) NOT NULL ,
+        password VARCHAR(100) NOT NULL
+    );
+    CREATE TABLE tokens
+    (
+        token VARCHAR(50) NOT NULL ,
+        users INTEGER NOT NULL REFERENCES users(id),
+        begin_validation DATE NOT NULL ,
+        end_validation DATE NOT NULL ,
+        valid BOOLEAN DEFAULT true
+    );
     CREATE VIEW fee AS
     SELECT SUM(fee) fee,DATE(date_delivery) FROM delivery WHERE stat=3 OR stat=1 GROUP BY DATE(date_delivery);
 

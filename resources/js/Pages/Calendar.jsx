@@ -3,7 +3,7 @@ import {Head} from "@inertiajs/react";
 
 export default function Calendar({calendar,date}){
     const dateChanger=(event)=>{
-        location.href="/calendar?date="+event.target.value;
+        location.href="/calendar?date="+event.target.value+"&tk="+localStorage.getItem("tk");
     }
     const calendarChanger=(id,event)=>{
         var modal = document.getElementById("myModal");
@@ -13,11 +13,11 @@ export default function Calendar({calendar,date}){
             date_work:date
         }
         if(event.target.checked){
-            axios.post("/calendar",calendar).then(response=>{
+            axios.post("/calendar?tk="+localStorage.getItem("tk"),calendar).then(response=>{
                 modal.style.display="none";
             });
         }else {
-            axios.put("/calendar",calendar).then(response=>{
+            axios.put("/calendar?tk="+localStorage.getItem("tk"),calendar).then(response=>{
                 modal.style.display="none";
             });
         }

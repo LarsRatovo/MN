@@ -24,19 +24,19 @@ export default function Sidebar({children}) {
                     </a>
                         <hr className="sidebar-divider my-0"/>
                             <ul className="navbar-nav text-light" id="accordionSidebar">
-                                <li className="nav-item"><a className="nav-link" href="/"><i
+                                <li className="nav-item"><a className="nav-link" href={"/deliveries?tk="+localStorage.getItem("tk")}><i
                                     className="fas fa-truck"></i><span>Livraisons</span></a></li>
-                                <li className="nav-item"><a className="nav-link" href="/report"><i
+                                <li className="nav-item"><a className="nav-link" href={"/report?tk="+localStorage.getItem("tk")}><i
                                     className="fas fa-money-check-alt"></i><span>Compte rendu Global</span></a></li>
-                                <li className="nav-item"><a className="nav-link" href="/report/deliver"><i
+                                <li className="nav-item"><a className="nav-link" href={"/report/deliver?tk="+localStorage.getItem("tk")}><i
                                     className="fas fa-money-check-alt"></i><span>Compte rendu par livreur</span></a></li>
-                                <li className="nav-item"><a className="nav-link" href="/spent"><i
+                                <li className="nav-item"><a className="nav-link" href={"/spent?tk="+localStorage.getItem("tk")}><i
                                     className="fas fa-money-check-alt"></i><span>Compte rendu des depenses</span></a></li>
-                                <li className="nav-item"><a className="nav-link" href="/calendar"><i
+                                <li className="nav-item"><a className="nav-link" href={"/calendar?tk="+localStorage.getItem("tk")}><i
                                     className="fas fa-calendar-alt"></i><span>Calendrier</span></a></li>
-                                <li className="nav-item"><a className="nav-link" href="/delivers"><i
+                                <li className="nav-item"><a className="nav-link" href={"/delivers?tk="+localStorage.getItem("tk")}><i
                                     className="fas fa-user-tag"></i><span>Livreur</span>s</a></li>
-                                <li className="nav-item"><a className="nav-link" href="/providers"><i
+                                <li className="nav-item"><a className="nav-link" href={"/providers?tk="+localStorage.getItem("tk")}><i
                                     className="fas fa-user-friends"></i><span>Fournisseur</span></a></li>
                             </ul>
                     </div>

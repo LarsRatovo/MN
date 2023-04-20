@@ -21,6 +21,7 @@ export default function DeliveryProvider({providers, delivers}) {
                 <div className="card-body card-livraison">
                     <form action={"/report/image"} method={"post"}>
                         <input type={"hidden"} name={"data"} value={JSON.stringify(provider)}/>
+                        <input type={"hidden"} name={"tk"} value={localStorage.getItem("tk")}/>
                         <button className="btn btn-primary" type="submit">png</button>
                     </form>
                     <div className="row">

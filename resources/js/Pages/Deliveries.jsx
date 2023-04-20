@@ -13,7 +13,7 @@ export default function Deliveries({providers,delivers}){
         event.preventDefault();
         var modal = document.getElementById("myModal");
         modal.style.display="block";
-        axios.post("/deliveries",delivery)
+        axios.post("/deliveries?tk="+localStorage.getItem("tk"),delivery)
             .then(response=>{
                     modal.style.display="none";
                     if(response.status===401){
@@ -27,7 +27,7 @@ export default function Deliveries({providers,delivers}){
     }
     const changeprovider=(event)=>{
         let {name,value}=event.target;
-        axios.post("/providers/name?name="+value).
+        axios.post("/providers/name?name="+value+"&tk="+localStorage.getItem("tk")).
         then(result=>{
             let ul=document.createElement("ul");
             ul.className="suggestion";
@@ -76,7 +76,7 @@ export default function Deliveries({providers,delivers}){
         });
     }
     const changeDate=(event)=>{
-        window.location.href="/test?date="+event.target.value;
+        window.location.href="/deliveries?date="+event.target.value+"&tk="+localStorage.getItem("tk");
     };
     const autofill=(event,provider)=>{
         let ref=document.getElementById("provider");

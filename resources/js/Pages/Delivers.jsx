@@ -8,7 +8,7 @@ export default function Delivers({delivers}){
         var modal = document.getElementById("myModal");
         modal.style.display="block";
         deliver[name]=value;
-        axios.put("/delivers",deliver).then(response=>
+        axios.put("/delivers?tk="+localStorage.getItem("tk"),deliver).then(response=>
             modal.style.display="none"
         );
     }
@@ -24,7 +24,7 @@ export default function Delivers({delivers}){
         var modal = document.getElementById("myModal");
         modal.style.display="block";
         console.log(JSON.stringify(deliver));
-        axios.post("/delivers",deliver).then(response=>{
+        axios.post("/delivers?tk="+localStorage.getItem("tk"),deliver).then(response=>{
                 modal.style.display="none";
                 location.reload();
             }

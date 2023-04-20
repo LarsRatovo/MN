@@ -62,7 +62,7 @@ class DeliveryController extends Controller
     }
     function get_provider_deliveries($date){
         if($date==null){
-            $date=new \Date();
+            $date=date("Y-m-d");
         }
         $data=\DB::select("SELECT p.* FROM provider p JOIN (SELECT DISTINCT provider FROM delivery WHERE DATE(date_delivery)=?) ids ON p.id=ids.provider",[$date]);
         $providers=array();

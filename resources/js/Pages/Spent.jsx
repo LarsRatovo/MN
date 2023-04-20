@@ -15,13 +15,13 @@ export default function Spent({delivers,spents}){
         var modal = document.getElementById("myModal");
         modal.style.display="block";
         spent[colname]=value;
-        axios.put("/spent",spent).then(result=>modal.style.display="none");
+        axios.put("/spent?tk="+localStorage.getItem("tk"),spent).then(result=>modal.style.display="none");
     }
     const save=(event)=>{
         var modal = document.getElementById("myModal");
         modal.style.display="block";
         event.preventDefault();
-        axios.post("/spent",spentDeliver).then(result=>{alert("Spent saved");modal.style.display="none";location.reload();});
+        axios.post("/spent?tk="+localStorage.getItem("tk"),spentDeliver).then(result=>{alert("Spent saved");modal.style.display="none";location.reload();});
     }
     const show=()=>{
         let somme=0;
