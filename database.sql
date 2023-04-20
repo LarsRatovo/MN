@@ -75,3 +75,5 @@
 
     CREATE VIEW report AS
         SELECT SUM(fee) fee,SUM(price) price,SUM(spent) spent,SUM(fee)-SUM(spent) stayed,date FROM pre_report GROUP BY date;
+        
+        INSERT INTO users(username,password) VALUES ('MNLivraisonAmbotra123',md5('zDKWSXevE$)IHQnR'));
