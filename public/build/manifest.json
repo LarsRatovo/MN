@@ -1,0 +1,101 @@
+{
+  "_Delivery-efe93ece.js": {
+    "file": "assets/Delivery-efe93ece.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "_Sidebar-7d27516f.js": {
+    "file": "assets/Sidebar-7d27516f.js",
+    "imports": [
+      "resources/js/app.jsx"
+    ]
+  },
+  "resources/js/Pages/Calendar.jsx": {
+    "file": "assets/Calendar-fcd0c7e3.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Sidebar-7d27516f.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Calendar.jsx"
+  },
+  "resources/js/Pages/DeliverReport.jsx": {
+    "file": "assets/DeliverReport-3af59182.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Sidebar-7d27516f.js",
+      "_Delivery-efe93ece.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/DeliverReport.jsx"
+  },
+  "resources/js/Pages/Deliveries.jsx": {
+    "file": "assets/Deliveries-3c312c84.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Sidebar-7d27516f.js",
+      "_Delivery-efe93ece.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Deliveries.jsx"
+  },
+  "resources/js/Pages/Delivers.jsx": {
+    "file": "assets/Delivers-c78988cd.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Sidebar-7d27516f.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Delivers.jsx"
+  },
+  "resources/js/Pages/Providers.jsx": {
+    "file": "assets/Providers-b06829bc.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Sidebar-7d27516f.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Providers.jsx"
+  },
+  "resources/js/Pages/Report.jsx": {
+    "file": "assets/Report-170b0a68.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Sidebar-7d27516f.js",
+      "_Delivery-efe93ece.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Report.jsx"
+  },
+  "resources/js/Pages/Spent.jsx": {
+    "file": "assets/Spent-a53dd05a.js",
+    "imports": [
+      "resources/js/app.jsx",
+      "_Sidebar-7d27516f.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Spent.jsx"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-9bc92780.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.jsx": {
+    "css": [
+      "assets/app-9bc92780.css"
+    ],
+    "dynamicImports": [
+      "resources/js/Pages/Calendar.jsx",
+      "resources/js/Pages/DeliverReport.jsx",
+      "resources/js/Pages/Deliveries.jsx",
+      "resources/js/Pages/Delivers.jsx",
+      "resources/js/Pages/Providers.jsx",
+      "resources/js/Pages/Report.jsx",
+      "resources/js/Pages/Spent.jsx"
+    ],
+    "file": "assets/app-c224f63b.js",
+    "isEntry": true,
+    "src": "resources/js/app.jsx"
+  }
+}
