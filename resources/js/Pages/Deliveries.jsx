@@ -6,7 +6,10 @@ import {useState} from "react";
 export default function Deliveries({providers,delivers}){
     const [delivery,setDelivery]=useState({
         type:'R',
-        stat:2
+        stat:2,
+        price:0,
+        fee:0,
+        observation:'RAS'
     });
     const urlsearch=new URLSearchParams(new URL(window.location.href).search);
     const submit=(event)=>{
@@ -54,8 +57,10 @@ export default function Deliveries({providers,delivers}){
                         setDelivery({
                             ...delivery,
                             provider:provider.ref,
+                            contact:provider.contact,
                             place:provider.recovery
                         })
+                        document.getElementById("contact").value=provider.contact;
                         document.getElementById("place").value=provider.recovery;
                     }else{
                         setDelivery({
@@ -122,13 +127,13 @@ export default function Deliveries({providers,delivers}){
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
-                                                        <input className="form-control" type="text" inputMode="numeric" name={"price"} onChange={change} placeholder="Prix"/>
-                                                        <input className="form-control" type="text" placeholder="Frais" name={"fee"} onChange={change} inputMode="numeric"/></div>
+                                                        <input className="form-control" type="text" inputMode="numeric" name={"price"} onChange={change} defaultValue={0} placeholder="Prix"/>
+                                                        <input className="form-control" type="text" placeholder="Frais" name={"fee"} onChange={change} defaultValue={0} inputMode="numeric"/></div>
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
                                                         <input className="form-control" type="datetime-local" name={"date_delivery"} onChange={change}/>
-                                                        <input className="form-control" type="text" name={"contact"} onChange={change} placeholder="Contact"/>
+                                                        <input className="form-control" type="text" name={"contact"} id={"contact"} onChange={change} placeholder="Contact"/>
                                                     </div>
                                                 </div>
                                                 <div className="col-md-3">
@@ -145,7 +150,7 @@ export default function Deliveries({providers,delivers}){
                                             </div>
                                             <div className="row">
                                                 <div className="col text-center">
-                                                    <input className="form-control" type="text" name={"observation"} onChange={change} placeholder="observation"/>
+                                                    <input className="form-control" type="text" name={"observation"} onChange={change} defaultValue={'RAS'} placeholder="observation"/>
                                                     <div className="bibodo"><button className="btn btn-primary" type="submit">Valider</button></div>
                                                 </div>
                                             </div>

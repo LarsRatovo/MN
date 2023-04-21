@@ -30,8 +30,8 @@
         deliver INTEGER DEFAULT NULL REFERENCES deliver(id),
         place VARCHAR(100) NOT NULL ,
         contact VARCHAR(15) NOT NULL ,
-        price DOUBLE PRECISION NOT NULL CHECK ( price>0 ),
-        fee DOUBLE PRECISION NOT NULL CHECK ( fee>0 ),
+        price DOUBLE PRECISION NOT NULL CHECK ( price>=0 ),
+        fee DOUBLE PRECISION NOT NULL CHECK ( fee>=0 ),
         type VARCHAR(1) NOT NULL CHECK ( type='R' OR type='L' ),
         stat INTEGER NOT NULL CHECK ( stat>=0 AND stat<=3 ),
         observation VARCHAR(150)
