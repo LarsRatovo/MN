@@ -86,21 +86,25 @@ export default function Deliveries({providers,delivers}){
     const autofill=(event,provider)=>{
         let ref=document.getElementById("provider");
         ref.value=provider.ref;
-        if(document.getElementById("type").value==='R'){
-            setDelivery({
-               ...delivery,
-                provider:provider.ref,
-               place:provider.recovery
-            });
-            document.getElementById("place").value=provider.recovery;
-        }else{
-            setDelivery({
-                ...delivery,
-                provider:provider.ref
-            });
-        }
+        document.getElementById("type").value='L';
+        let current = new Date();
+        let cDate = current.getFullYear() + '-' + (current.toLocaleString("en-US",{month:"2-digit"})) + '-' + current.toLocaleString("en-US",{day:"2-digit"});
+        let cTime = current.toLocaleString("en-US",{
+            hour12:false,
+            hour:"numeric",
+            minute:"numeric",
+            seconds:"numeric"
+        });
+        let dateTime = cDate + 'T' + cTime;
+        console.log(dateTime);
+        setDelivery({
+            ...delivery,
+            provider:provider.ref,
+            date_delivery:dateTime
+        });
+        document.getElementById("date_delivery").value=dateTime;
         let href=window.location.href;
-        href.replace("#form","");
+        href=href.replace("#form","");
         window.location.href=href+"#form";
     }
     return(
@@ -165,7 +169,7 @@ export default function Deliveries({providers,delivers}){
                                 <div className="card-body card-livraison">
                                     <div className="row">
                                         <div className="col-md-6 col-lg-11 col-xl-12 d-xl-flex justify-content-xl-start align-items-xl-center">
-                                            <p className="user-info" onDoubleClick={(event)=>{autofill(event,provider)}}>{provider.ref}</p>
+                                            <p className="user-info" style={{cursor:"pointer"}} onDoubleClick={(event)=>{autofill(event,provider)}}>{provider.ref}</p>
                                         </div>
                                         <div className="col">
                                             <p className="user-info">{provider.surname}</p>

@@ -27,6 +27,8 @@ Route::middleware(\App\Http\Middleware\TokenFilter::class)->group(function () {
     Route::put("/deliveries", [\App\Http\Controllers\DeliveryController::class, "update"]);
     Route::post("/deliveries", [\App\Http\Controllers\DeliveryController::class, "save"]);
     Route::get("/deliveries", [\App\Http\Controllers\DeliveryController::class, "provider_deliveries"]);
+    Route::delete("/deliveries/{id}", [\App\Http\Controllers\DeliveryController::class, "remove"]);
+
     Route::get("/report/deliver", [\App\Http\Controllers\DeliveryController::class, "load_deliver_deliveries"]);
     Route::post("/report/deliver", [\App\Http\Controllers\DeliveryController::class, "deliver_deliveries"]);
     Route::post("/report/deliver/pdf", [\App\Http\Controllers\DeliveryController::class, "toPdf"]);
