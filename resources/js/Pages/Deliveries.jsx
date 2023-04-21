@@ -99,7 +99,9 @@ export default function Deliveries({providers,delivers}){
                 provider:provider.ref
             });
         }
-        window.location.href=window.location.href+"#form";
+        let href=window.location.href;
+        href.replace("#form","");
+        window.location.href=href+"#form";
     }
     return(
         <Sidebar>
@@ -132,7 +134,7 @@ export default function Deliveries({providers,delivers}){
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
-                                                        <input className="form-control" type="datetime-local" name={"date_delivery"} onChange={change}/>
+                                                        <input className="form-control" type="datetime-local" id={"date_delivery"} name={"date_delivery"} onChange={change}/>
                                                         <input className="form-control" type="text" name={"contact"} id={"contact"} onChange={change} placeholder="Contact"/>
                                                     </div>
                                                 </div>
@@ -178,7 +180,7 @@ export default function Deliveries({providers,delivers}){
                                             <p className="user-info">{provider.recovery}</p>
                                         </div>
                                     </div>
-                                    <Delivery deliveries={provider.deliveries} delivers={delivers}/>
+                                    <Delivery deliveries={provider.deliveries} delivers={delivers} provider={provider} delivery={delivery} setDelivery={setDelivery}/>
                                 </div>
                             )}
                         </div>
