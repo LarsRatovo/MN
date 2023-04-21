@@ -36,6 +36,26 @@ export default function Delivery({deliveries, delivers,provider,generate}) {
                 });
         }
     }
+    const sum=()=>{
+        let fee=0;
+        let price=0;
+        deliveries.forEach((d)=>{
+            fee+=parseInt(d.fee);
+            price+=parseInt(d.price);
+        })
+        return (
+            <table>
+                <tr>
+                    <th>Frais</th>
+                    <th>Prix</th>
+                    <th>Total</th>
+                </tr>
+                    <td>{fee}</td>
+                    <td>{price}</td>
+                    <td>{fee+price}</td>
+            </table>
+        );
+    }
     return (
         <div className="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
             <table className="table my-0" id="dataTable" style={{color:"black"}}>
@@ -92,6 +112,7 @@ export default function Delivery({deliveries, delivers,provider,generate}) {
                 }
                 </tbody>
             </table>
+            {sum()}
         </div>
     );
 }
