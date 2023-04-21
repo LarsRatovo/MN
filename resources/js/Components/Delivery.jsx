@@ -28,7 +28,8 @@ export default function Delivery({deliveries, delivers,provider,generate}) {
             location.reload();
         });
     }
-    const remove=(delivery)=>{
+    const remove=(event,delivery)=>{
+        console.log(delivery)
         if(confirm("Confirm the deletion")){
             axios.delete("/deliveries/"+delivery.id+"?tk="+localStorage.getItem("tk"))
                 .then(response=>{
