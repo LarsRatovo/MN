@@ -1,4 +1,4 @@
-export default function Delivery({deliveries, delivers}) {
+export default function Delivery({deliveries, delivers,provider,setDelivery,delivery}) {
     const states = [
         {
             name: 'Annule',
@@ -28,6 +28,22 @@ export default function Delivery({deliveries, delivers}) {
             location.reload();
         });
     }
+    const generate=(event,delivery)=>{
+        if(delivery.type==='R'){
+            document.getElementById("provider").value=provider.ref;
+            document.getElementById("type").value='L';
+            document.getElementById("date_delivery").value=delivery.date_delivery;
+            setDelivery({
+                ...delivery,
+                provider:provider.ref,
+                type:'L',
+                date_delivery:delivery.date_delivery
+            });
+            let href=window.location.href;
+            href=href.replace("#form","");
+            window.location.href=href+"#form";
+        }
+    }
     return (
         <div className="table-responsive table mt-2" id="dataTable-1" role="grid" aria-describedby="dataTable_info">
             <table className="table my-0" id="dataTable" style={{color:"black"}}>
@@ -50,7 +66,7 @@ export default function Delivery({deliveries, delivers}) {
                 {
                     deliveries.map(delivery =>
                         <tr style={{backgroundColor: color[delivery.stat]}}>
-                            <td>{delivery.ref}</td>
+                            <td onDoubleClick={(event)=>generate(event,delivery)}>{delivery.ref}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'place',event.target.innerHTML)}>{delivery.place}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'contact',event.target.innerHTML)}>{delivery.contact}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'price',event.target.innerHTML)}>{delivery.price}</td>
