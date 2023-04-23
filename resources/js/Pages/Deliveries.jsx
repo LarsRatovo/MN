@@ -24,6 +24,8 @@ export default function Deliveries({providers,delivers}){
                     }else if(response.status===201){
                         alert("Delvery created");
                         location.reload();
+                    }else{
+                        alert("Error was found");
                     }
                 }
             );
@@ -75,34 +77,26 @@ export default function Deliveries({providers,delivers}){
     }
     const change=(event)=>{
         let {name,value}=event.target;
-        setDelivery({
-            ...delivery,
-            [name]:value
-        });
+        if(value&&value!==""){
+            setDelivery({
+                ...delivery,
+                [name]:value
+            });
+        }
     }
     const changeDate=(event)=>{
         window.location.href="/deliveries?date="+event.target.value+"&tk="+localStorage.getItem("tk");
     };
-    const autofill=(event,provider)=>{
+    const autofill=(event,provider,date)=>{
         let ref=document.getElementById("provider");
         ref.value=provider.ref;
         document.getElementById("type").value='L';
-        let current = new Date();
-        let cDate = current.getFullYear() + '-' + (current.toLocaleString("en-US",{month:"2-digit"})) + '-' + current.toLocaleString("en-US",{day:"2-digit"});
-        let cTime = current.toLocaleString("en-US",{
-            hour12:false,
-            hour:"numeric",
-            minute:"numeric",
-            seconds:"numeric"
-        });
-        let dateTime = cDate + 'T' + cTime;
-        console.log(dateTime);
         setDelivery({
             ...delivery,
             provider:provider.ref,
-            date_delivery:dateTime
+            date_delivery:date
         });
-        document.getElementById("date_delivery").value=dateTime;
+        document.getElementById("date_delivery").value=date;
         let href=window.location.href;
         href=href.replace("#form","");
         window.location.href=href+"#form";
@@ -133,8 +127,8 @@ export default function Deliveries({providers,delivers}){
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
-                                                        <input className="form-control" type="text" inputMode="numeric" name={"price"} onChange={change} defaultValue={0} placeholder="Prix"/>
-                                                        <input className="form-control" type="text" placeholder="Frais" name={"fee"} onChange={change} defaultValue={0} inputMode="numeric"/></div>
+                                                        <input className="form-control" type="text" inputMode="numeric" name={"price"} onChange={change} placeholder="Prix"/>
+                                                        <input className="form-control" type="text" placeholder="Frais" name={"fee"} onChange={change} inputMode="numeric"/></div>
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
@@ -156,7 +150,7 @@ export default function Deliveries({providers,delivers}){
                                             </div>
                                             <div className="row">
                                                 <div className="col text-center">
-                                                    <input className="form-control" type="text" name={"observation"} onChange={change} defaultValue={'RAS'} placeholder="observation"/>
+                                                    <input className="form-control" type="text" name={"observation"} onChange={change} placeholder="observation"/>
                                                     <div className="bibodo"><button className="btn btn-primary" type="submit">Valider</button></div>
                                                 </div>
                                             </div>
@@ -169,7 +163,7 @@ export default function Deliveries({providers,delivers}){
                                 <div className="card-body card-livraison">
                                     <div className="row">
                                         <div className="col-md-6 col-lg-11 col-xl-12 d-xl-flex justify-content-xl-start align-items-xl-center">
-                                            <p className="user-info" style={{cursor:"pointer"}} onDoubleClick={(event)=>{autofill(event,provider)}}>{provider.ref}</p>
+                                            <p className="user-info" style={{cursor:"pointer"}}>{provider.ref}</p>
                                         </div>
                                         <div className="col">
                                             <p className="user-info">{provider.surname}</p>
@@ -184,7 +178,7 @@ export default function Deliveries({providers,delivers}){
                                             <p className="user-info">{provider.recovery}</p>
                                         </div>
                                     </div>
-                                    <Delivery deliveries={provider.deliveries} delivers={delivers} provider={provider} delivery={delivery} setDelivery={setDelivery}/>
+                                    <Delivery deliveries={provider.deliveries} delivers={delivers} provider={provider} autofill={autofill}/>
                                 </div>
                             )}
                         </div>

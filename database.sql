@@ -34,10 +34,13 @@
         fee DOUBLE PRECISION NOT NULL CHECK ( fee>=0 ),
         type VARCHAR(1) NOT NULL CHECK ( type='R' OR type='L' ),
         stat INTEGER NOT NULL CHECK ( stat>=0 AND stat<=3 ),
-        observation VARCHAR(150)
+        observation VARCHAR(150),
+        UNIQUE(ref,date_delivery::Date)
     );
+    CREATE UNIQUE index ref_unique ON delivery(ref,DATE(date_delivery));
     CREATE TABLE spent
     (
+        id SERIAL NOT NULL PRIMARY KEY ,
         deliver INTEGER NOT NULL REFERENCES deliver(id),
         date_spent DATE NOT NULL ,
         reason VARCHAR(100) NOT NULL ,
@@ -58,7 +61,7 @@
         valid BOOLEAN DEFAULT true
     );
     CREATE VIEW fee AS
-    SELECT SUM(fee) fee,DATE(date_delivery) FROM delivery WHERE stat=3 OR stat=1 GROUP BY DATE(date_delivery);
+    SELECT SUM(fee*1000) fee,DATE(date_delivery) FROM delivery WHERE stat=3 OR stat=1 GROUP BY DATE(date_delivery);
 
     CREATE VIEW price AS
     SELECT SUM(price) price,DATE(date_delivery) FROM delivery WHERE stat=1 GROUP BY DATE(date_delivery);
@@ -75,3 +78,5 @@
 
     CREATE VIEW report AS
         SELECT SUM(fee) fee,SUM(price) price,SUM(spent) spent,SUM(fee)-SUM(spent) stayed,date FROM pre_report GROUP BY date;
+
+    INSERT INTO users(username,password) VALUES ('MNLivraisonAmbotra123',md5('zDKWSXevE$)IHQnR'));

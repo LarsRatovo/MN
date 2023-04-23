@@ -43,9 +43,6 @@ export default function DeliveryProvider({providers, delivers}) {
                         </div>
                     </div>
                     <Delivery deliveries={provider.deliveries} delivers={delivers}/>
-                    <div>Total versement : {price(provider.deliveries)}</div>
-                    <div>Total frais : {fee(provider.deliveries)}</div>
-                    <div>Total : {fee(provider.deliveries)+price(provider.deliveries)}</div>
                 </div>
             )}
         </>

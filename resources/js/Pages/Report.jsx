@@ -12,7 +12,7 @@ export default function Report({date, providers, report,delivers}) {
     const diff=(event)=>{
         if(report[0]){
             let real_remainder=parseInt(event.target.value);
-            let remainder=report[0].stayed-real_remainder;
+            let remainder=real_remainder-report[0].stayed;
             document.getElementById("diff").innerHTML=remainder;
             if(remainder===0){
                 document.getElementById("diff").style.color="green";

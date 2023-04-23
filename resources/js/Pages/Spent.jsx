@@ -21,7 +21,7 @@ export default function Spent({delivers,spents}){
         var modal = document.getElementById("myModal");
         modal.style.display="block";
         event.preventDefault();
-        axios.post("/spent?tk="+localStorage.getItem("tk"),spentDeliver).then(result=>{alert("Spent saved");modal.style.display="none";location.reload();});
+        axios.post("/spent?tk="+localStorage.getItem("tk"),spentDeliver).then(result=>{alert("Spent saved");modal.style.display="none";window.location=window.location;});
     }
     const show=()=>{
         let somme=0;
@@ -115,6 +115,7 @@ export default function Spent({delivers,spents}){
                                         <div className="d-flex contain">
                                             <label className="form-label d-flex livreures">&nbsp;
                                                 <input className="field" type="date" name={"date"}/>
+                                                <input type="hidden" name={"tk"} value={localStorage.getItem("tk")}/>
                                                 <select className="form-select" name={"deliver"}>
                                                     <option value="" selected="">All</option>
                                                     {delivers.map(deliver=>
