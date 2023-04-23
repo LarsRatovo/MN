@@ -16,7 +16,7 @@ class   SpentController extends Controller
     function update(Request $request){
         $arr=json_decode($request->getContent(),true);
         unset($arr['owner']);
-        return Spent::where("deliver","=",$arr["deliver"])->where("date_spent","=",$arr["date_spent"])->update($arr);
+        return Spent::where("id","=",$arr["id"])->where("date_spent","=",$arr["date_spent"])->update($arr);
     }
     function load(Request $request){
         $date=$request->get("date");
