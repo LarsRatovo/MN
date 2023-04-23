@@ -35,7 +35,7 @@
         type VARCHAR(1) NOT NULL CHECK ( type='R' OR type='L' ),
         stat INTEGER NOT NULL CHECK ( stat>=0 AND stat<=3 ),
         observation VARCHAR(150),
-        UNIQUE(ref,date_delivery::Date)
+        UNIQUE(ref,date_delivery)
     );
     CREATE UNIQUE index ref_unique ON delivery(ref,DATE(date_delivery));
     CREATE TABLE spent
