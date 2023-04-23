@@ -132,7 +132,7 @@ export default function Deliveries({providers,delivers}){
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
-                                                        <input className="form-control" type="datetime-local" id={"date_delivery"} name={"date_delivery"} onChange={change}/>
+                                                        <input className="form-control" type="datetime-local" id={"date_delivery"} name={"date_delivery"} onChange={change} required/>
                                                         <input className="form-control" type="text" name={"contact"} id={"contact"} onChange={change} placeholder="Contact"/>
                                                     </div>
                                                 </div>
