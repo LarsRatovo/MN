@@ -107,6 +107,7 @@ export default function Deliveries({providers,delivers}){
         });
         document.getElementById("date_delivery").value=date;
         let href=window.location.href;
+        href=href.replace(new RegExp("#MN[0-9]*"),"");
         href=href.replace("#form","");
         window.location.href=href+"#form";
     }
