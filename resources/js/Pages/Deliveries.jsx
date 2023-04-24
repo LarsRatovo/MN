@@ -94,6 +94,7 @@ export default function Deliveries({providers,delivers}){
         setDelivery({
             ...delivery,
             provider:provider.ref,
+            type:'L',
             date_delivery:date
         });
         document.getElementById("date_delivery").value=date;
