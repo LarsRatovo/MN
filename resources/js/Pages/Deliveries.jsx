@@ -94,7 +94,7 @@ export default function Deliveries({providers,delivers}){
         setDelivery({
             ...delivery,
             provider:provider.ref,
-            type:'L',
+            type:"L",
             date_delivery:date
         });
         document.getElementById("date_delivery").value=date;
@@ -134,12 +134,12 @@ export default function Deliveries({providers,delivers}){
                                                 <div className="col-md-3">
                                                     <div>
                                                         <input className="form-control" type="datetime-local" id={"date_delivery"} name={"date_delivery"} onChange={change} required/>
-                                                        <input className="form-control" type="text" name={"contact"} id={"contact"} onChange={change} placeholder="Contact"/>
+                                                        <input className="form-control" type="text" name={"contact"} id={"contact"} onChange={change} placeholder="Contact" required/>
                                                     </div>
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
-                                                        <input className="form-control" type="text" name={"place"} id={"place"} onChange={change} placeholder="Lieu"/>
+                                                        <input className="form-control" type="text" name={"place"} id={"place"} onChange={change} placeholder="Lieu" required/>
                                                         <select className="form-select" name={"stat"} onChange={change}>
                                                             <option value="2">En cours</option>
                                                             <option value="0">Annule</option>
