@@ -1,56 +1,56 @@
 {
-  "_Delivery-e790d1e8.js": {
-    "file": "assets/Delivery-e790d1e8.js",
+  "_Delivery-ed790eca.js": {
+    "file": "assets/Delivery-ed790eca.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
-  "_Sidebar-9f64e305.js": {
-    "file": "assets/Sidebar-9f64e305.js",
+  "_Sidebar-23335282.js": {
+    "file": "assets/Sidebar-23335282.js",
     "imports": [
       "resources/js/app.jsx"
     ]
   },
   "resources/js/Pages/Calendar.jsx": {
-    "file": "assets/Calendar-71486cba.js",
+    "file": "assets/Calendar-2ca981c6.js",
     "imports": [
       "resources/js/app.jsx",
-      "_Sidebar-9f64e305.js"
+      "_Sidebar-23335282.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Calendar.jsx"
   },
   "resources/js/Pages/DeliverReport.jsx": {
-    "file": "assets/DeliverReport-6d571065.js",
+    "file": "assets/DeliverReport-da31c8f0.js",
     "imports": [
       "resources/js/app.jsx",
-      "_Sidebar-9f64e305.js",
-      "_Delivery-e790d1e8.js"
+      "_Sidebar-23335282.js",
+      "_Delivery-ed790eca.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/DeliverReport.jsx"
   },
   "resources/js/Pages/Deliveries.jsx": {
-    "file": "assets/Deliveries-7b23a496.js",
+    "file": "assets/Deliveries-81b86495.js",
     "imports": [
       "resources/js/app.jsx",
-      "_Sidebar-9f64e305.js",
-      "_Delivery-e790d1e8.js"
+      "_Sidebar-23335282.js",
+      "_Delivery-ed790eca.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Deliveries.jsx"
   },
   "resources/js/Pages/Delivers.jsx": {
-    "file": "assets/Delivers-82ae18f6.js",
+    "file": "assets/Delivers-dee43acf.js",
     "imports": [
       "resources/js/app.jsx",
-      "_Sidebar-9f64e305.js"
+      "_Sidebar-23335282.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Delivers.jsx"
   },
   "resources/js/Pages/Home.jsx": {
-    "file": "assets/Home-11fd43a5.js",
+    "file": "assets/Home-8c12a908.js",
     "imports": [
       "resources/js/app.jsx"
     ],
@@ -58,29 +58,29 @@
     "src": "resources/js/Pages/Home.jsx"
   },
   "resources/js/Pages/Providers.jsx": {
-    "file": "assets/Providers-630d6a1d.js",
+    "file": "assets/Providers-296559a6.js",
     "imports": [
       "resources/js/app.jsx",
-      "_Sidebar-9f64e305.js"
+      "_Sidebar-23335282.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Providers.jsx"
   },
   "resources/js/Pages/Report.jsx": {
-    "file": "assets/Report-441893a4.js",
+    "file": "assets/Report-b54be7b9.js",
     "imports": [
       "resources/js/app.jsx",
-      "_Sidebar-9f64e305.js",
-      "_Delivery-e790d1e8.js"
+      "_Sidebar-23335282.js",
+      "_Delivery-ed790eca.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Report.jsx"
   },
   "resources/js/Pages/Spent.jsx": {
-    "file": "assets/Spent-debc3526.js",
+    "file": "assets/Spent-8bdaa0f0.js",
     "imports": [
       "resources/js/app.jsx",
-      "_Sidebar-9f64e305.js"
+      "_Sidebar-23335282.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Spent.jsx"
@@ -103,7 +103,7 @@
       "resources/js/Pages/Report.jsx",
       "resources/js/Pages/Spent.jsx"
     ],
-    "file": "assets/app-7b6104c1.js",
+    "file": "assets/app-314895d4.js",
     "isEntry": true,
     "src": "resources/js/app.jsx"
   }
