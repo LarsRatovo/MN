@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export default function Delivery({deliveries, delivers,autofill,provider}) {
     const states = [
         {
@@ -46,6 +48,37 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                 });
             }
         })
+    }
+    const report=(delivery,date)=>{
+        var modal = document.getElementById("myModal");
+        modal.style.display="block";
+        let old=new Date(delivery.date_delivery);
+        let nold=new Date(date);
+        if(old.toDateString()!==nold.toDateString()&&confirm("Reporter(Ajout de la livraison vers la date choisie et modification du status de la livraison du jour en retour) ou seulement changer la date")){
+            let copy={
+                ...delivery,
+                stat:2,
+                date_delivery:date
+            }
+            copy["provider"]=provider.ref;
+            axios.post("/deliveries?tk="+localStorage.getItem("tk"),copy)
+                .then(response=>{
+                        if(response.status===401){
+                            alert("No provider found");
+                        }else if(response.status===201){
+                            alert("Delvery created");
+                            delivery['stat']=1;
+                            delivery['observation']='Retour';
+                            update(delivery,'stat',1);
+                        }else{
+                            alert("Error was found");
+                        }
+                    }
+                );
+        }else {
+            update(delivery,"date_delivery",date);
+        }
+        modal.style.display="none";
     }
     const remove=(event,delivery)=>{
         console.log(delivery)
@@ -104,7 +137,7 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'price',event.target.innerHTML)}>{delivery.price}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'fee',event.target.innerHTML)}>{delivery.fee}</td>
                             <td>{parseInt(delivery.price) + (parseInt(delivery.fee)*1000)}</td>
-                            <td><input type={"datetime-local"} defaultValue={delivery.date_delivery} onChange={(event)=>{update(delivery,'date_delivery',event.target.value)}}/></td>
+                            <td><input type={"datetime-local"} defaultValue={delivery.date_delivery} onChange={(event)=>{report(delivery,event.target.value)}}/></td>
                             <td>{delivery.type}</td>
                             <td><select onChange={(event)=>update(delivery,'deliver',event.target.value)}>
                                 <option>Deliver</option>
