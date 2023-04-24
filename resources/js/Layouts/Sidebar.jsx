@@ -1,6 +1,8 @@
 import Modal from "@/Components/Modal";
 
 export default function Sidebar({children}) {
+    let date=new Date();
+    let val=date.getFullYear()+"-"+date.toLocaleDateString("fr-FR",{month:"2-digit"})+"-"+date.toLocaleDateString("fr-FR",{day:"2-digit"});
     return (
         <>
             <header>
@@ -24,7 +26,7 @@ export default function Sidebar({children}) {
                     </a>
                         <hr className="sidebar-divider my-0"/>
                             <ul className="navbar-nav text-light" id="accordionSidebar">
-                                <li className="nav-item"><a className="nav-link" href={"/deliveries?tk="+localStorage.getItem("tk")}><i
+                                <li className="nav-item"><a className="nav-link" href={"/deliveries?tk="+localStorage.getItem("tk")+"&date="+val}><i
                                     className="fas fa-truck"></i><span>Livraisons</span></a></li>
                                 <li className="nav-item"><a className="nav-link" href={"/report?tk="+localStorage.getItem("tk")}><i
                                     className="fas fa-money-check-alt"></i><span>Compte rendu Global</span></a></li>

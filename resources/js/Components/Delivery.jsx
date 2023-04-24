@@ -31,10 +31,9 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
         axios.put("/deliveries?tk="+localStorage.getItem("tk"), delivery).
         then(response=>{
             modal.style.display="none";
-            location.reload();
         });
     }
-    const updateState=(delivery,value)=>{
+    const updateState=(delivery,value,select)=>{
         states.forEach(state=>{
             if(state.value===parseInt(value)){
                 delivery['stat']=state.value;
@@ -44,7 +43,7 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                 axios.put("/deliveries?tk="+localStorage.getItem("tk"), delivery).
                 then(response=>{
                     modal.style.display="none";
-                    location.reload();
+                    select.parentElement.parentElement.style.backgroundColor=color[value];
                 });
             }
         })
@@ -150,7 +149,7 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                                 })}
                             </select></td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'observation',event.target.innerHTML)}>{delivery.observation}</td>
-                            <td><select onChange={(event)=>updateState(delivery,event.target.value)}>
+                            <td><select onChange={(event)=>updateState(delivery,event.target.value,event.target)}>
                                 {states.map(state =>{
                                     if(delivery.stat===state.value){
                                         return <option value={state.value} selected>{state.name}</option>

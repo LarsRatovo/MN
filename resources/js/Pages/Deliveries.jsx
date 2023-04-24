@@ -75,6 +75,14 @@ export default function Deliveries({providers,delivers}){
             }
         });
     }
+    const goto=(event)=>{
+        let value=document.getElementById("goto").value;
+        let href=window.location.href;
+        href=href.replace("#form","");
+        href=href.replace(new RegExp("#MN[0-9]*"),"");
+        href=href+"#"+value.toUpperCase();
+        window.location.href=href;
+    }
     const change=(event)=>{
         let {name,value}=event.target;
         if(value&&value!==""){
@@ -159,9 +167,19 @@ export default function Deliveries({providers,delivers}){
                                     </form>
                                 </div>
                             </nav>
-                            <div className="d-flex contain"><label className="form-label d-flex livreures">&nbsp;<input className="field" type="date" value={urlsearch.get("date")} onChange={changeDate}/></label></div>
+                            <div className="d-flex contain">
+                                <label className="form-label d-flex livreures">&nbsp;
+                                    <input className="field" type="date" value={urlsearch.get("date")} onChange={changeDate}/>
+                                </label>
+                            </div>
+                            <div className="d-flex contain">
+                                <label className="form-label d-flex livreures">&nbsp;
+                                    <input className="field" type="text" placeholder={"Aller a"} id={"goto"}/>
+                                    <button className="btn btn-primary" type="submit" onClick={goto}>Go</button>
+                                </label>
+                            </div>
                             {providers.map(provider=>
-                                <div className="card-body card-livraison">
+                                <div className="card-body card-livraison" id={provider.ref}>
                                     <div className="row">
                                         <div className="col-md-6 col-lg-11 col-xl-12 d-xl-flex justify-content-xl-start align-items-xl-center">
                                             <p className="user-info" style={{cursor:"pointer"}}>{provider.ref}</p>

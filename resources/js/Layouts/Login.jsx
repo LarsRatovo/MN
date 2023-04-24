@@ -11,7 +11,9 @@ export default function Login() {
                 if(result.status!==401){
                     let user=result.data;
                     localStorage.setItem("tk",user.token);
-                    window.location="/deliveries?tk="+user.token;
+                    let date=new Date();
+                    let val=date.getFullYear()+"-"+date.toLocaleDateString("fr-FR",{month:"2-digit"})+"-"+date.toLocaleDateString("fr-FR",{day:"2-digit"});
+                    window.location="/deliveries?tk="+user.token+"&date="+val;
                 }else {
                     alert("Can't log");
                 }
