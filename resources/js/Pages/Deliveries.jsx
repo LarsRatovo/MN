@@ -27,6 +27,7 @@ export default function Deliveries({providers,delivers}){
                         href=href.replace(new RegExp("#MN[0-9]*"),"");
                         href=href.replace("#form","");
                         window.location.href=href+"#"+delivery.provider;
+                        window.location.reload();
                     }else{
                         alert("Error was found");
                     }
