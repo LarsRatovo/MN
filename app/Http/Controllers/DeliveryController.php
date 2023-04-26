@@ -134,18 +134,18 @@ class DeliveryController extends Controller
         $this->fpdf->Ln();
         $this->fpdf->Write(10,$data['deliver']['name']);
         $this->fpdf->Ln();
-        $this->fpdf->Cell(20,10,"Ref",1);
+        $this->fpdf->Cell(25,10,"Ref",1);
         $this->fpdf->Cell(60,10,"Lieu",1);
-        $this->fpdf->Cell(20,10,"Heure",1);
-        $this->fpdf->Cell(20,10,"Contact",1);
+        $this->fpdf->Cell(15,10,"Heure",1);
+        $this->fpdf->Cell(25,10,"Contact",1);
         $this->fpdf->Cell(20,10,"Total",1);
         $this->fpdf->Cell(40,10,"Observation",1);
         $this->fpdf->Ln();
         foreach ($data['deliveries'] as $delivery){
-            $this->fpdf->Cell(20,10,$delivery['ref'],1);
+            $this->fpdf->Cell(25,10,$delivery['ref'],1);
             $this->fpdf->Cell(60,10,$delivery['place'],1);
-            $this->fpdf->Cell(20,10,date("H:i",strtotime($delivery['date_delivery'])),1);
-            $this->fpdf->Cell(20,10,$delivery['contact'],1);
+            $this->fpdf->Cell(15,10,date("H:i",strtotime($delivery['date_delivery'])),1);
+            $this->fpdf->Cell(25,10,$delivery['contact'],1);
             $this->fpdf->Cell(20,10,$delivery['price']+$delivery['fee'],1);
             $this->fpdf->Cell(40,10,$delivery['observation'],1);
             $this->fpdf->Ln();
