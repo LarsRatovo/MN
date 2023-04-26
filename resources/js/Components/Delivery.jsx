@@ -130,7 +130,7 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                 {
                     deliveries.map(delivery =>
                         <tr style={{backgroundColor: color[delivery.stat]}}>
-                            <td onClick={(event)=> autofill(event,provider,delivery.date_delivery)} onDoubleClick={(event)=>remove(event,delivery)} style={{cursor:"pointer",fontSize:"10px",fontStyle:"bold"}}>{delivery.ref}</td>
+                            <td onClick={(event)=> autofill(event,provider,delivery.date_delivery)} onDoubleClick={(event)=>remove(event,delivery)} style={{cursor:"pointer"}}>{delivery.ref}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'place',event.target.innerHTML)}>{delivery.place}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'contact',event.target.innerHTML)}>{delivery.contact}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'price',event.target.innerHTML)}>{delivery.price}</td>
