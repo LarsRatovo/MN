@@ -66,6 +66,7 @@ export default function Report({date, providers, report,delivers}) {
                                 <div className="d-flex contain"><label className="form-label d-flex livreures">
                                     <form method={"post"} action={"/report"}>
                                         <input type={"hidden"} name={"date"} value={vardate}/>
+                                        <input type={"hidden"} name={"tk"} value={localStorage.getItem("tk")}/>
                                     <input type="text" className="field" placeholder="Fournisseurs" name={"key"}/>&nbsp;
                                     <button className="btn btn-primary" type="submit">Filtrer</button>
                                     </form>
