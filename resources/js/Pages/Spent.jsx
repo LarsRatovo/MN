@@ -18,10 +18,23 @@ export default function Spent({delivers,spents}){
         axios.put("/spent?tk="+localStorage.getItem("tk"),spent).then(result=>modal.style.display="none");
     }
     const save=(event)=>{
-        var modal = document.getElementById("myModal");
+        let modal = document.getElementById("myModal");
         modal.style.display="block";
         event.preventDefault();
-        axios.post("/spent?tk="+localStorage.getItem("tk"),spentDeliver).then(result=>{alert("Spent saved");modal.style.display="none";window.location=window.location;});
+        axios.post("/spent?tk="+localStorage.getItem("tk"),spentDeliver).then(response=>{
+            modal.style.display="none";
+            document.getElementById("designation").value="";
+            document.getElementById("value").value="";
+            setSpentDeliver({
+                ...spentDeliver,
+                reason:null,
+                amount:null
+            });
+            alert("Spent saved");
+        }).catch(err=>{
+            modal.style.display="none";
+            alert("Error occurred");
+        });
     }
     const show=()=>{
         let somme=0;
@@ -89,11 +102,11 @@ export default function Spent({delivers,spents}){
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div><input className="form-control" type="text" name={"reason"} onChange={set}
-                                                                placeholder="Designation"/></div>
+                                                                placeholder="Designation" id={"designation"}/></div>
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div><input className="form-control" type="text" name={"amount"} onChange={set}
-                                                                placeholder="Valeur"/></div>
+                                                                placeholder="Valeur" id={"value"}/></div>
                                                 </div>
                                             </div>
                                             <div className="row">

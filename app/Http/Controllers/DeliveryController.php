@@ -184,12 +184,12 @@ class DeliveryController extends Controller
         imagettftext($img, 15, 0, 10, 95,$text_colour, $font,$data["recovery"]);
         imagefilledrectangle ($img, 0, 100, 994, 130, $back);
         imagettftext($img, 11, 0, 10, 120,$text, $font,"Ref");
-        imagettftext($img, 11, 0, 50, 120,$text, $font,"Lieu");
-        imagettftext($img, 11, 0, 240, 120,$text, $font,"Contact");
-        imagettftext($img, 11, 0, 350, 120,$text, $font,"Frais");
-        imagettftext($img, 11, 0, 460, 120,$text, $font,"Prix");
-        imagettftext($img, 11, 0, 570, 120,$text, $font,"Etat");
-        imagettftext($img, 11, 0, 670, 120,$text, $font,"Obs");
+        imagettftext($img, 11, 0, 100, 120,$text, $font,"Lieu");
+        imagettftext($img, 11, 0, 290, 120,$text, $font,"Contact");
+        imagettftext($img, 11, 0, 400, 120,$text, $font,"Prix");
+        imagettftext($img, 11, 0, 510, 120,$text, $font,"Total");
+        imagettftext($img, 11, 0, 620, 120,$text, $font,"Etat");
+        imagettftext($img, 11, 0, 720, 120,$text, $font,"Obs");
         $y=140;
         $frais=0;
         $prix=0;
@@ -200,19 +200,15 @@ class DeliveryController extends Controller
             }
             imagefilledrectangle ($img, 0, $y-15, 994, $y+5,$color[$delivery['stat']]);
             imagettftext($img, 10, 0, 10, $y,$text, $font,$delivery['ref']);
-            imagettftext($img, 10, 0, 50, $y,$text, $font,$delivery['place']);
-            imagettftext($img, 10, 0, 240, $y,$text, $font,$delivery['contact']);
-            imagettftext($img, 10, 0, 350, $y,$text, $font,$delivery['fee']*1000);
-            imagettftext($img, 10, 0, 460, $y,$text, $font,$delivery['price']);
-            imagettftext($img, 10, 0, 570, $y,$text, $font,$etat[$delivery['stat']]);
-            imagettftext($img, 10, 0, 670, $y,$text, $font,$delivery['observation']);
+            imagettftext($img, 10, 0, 100, $y,$text, $font,$delivery['place']);
+            imagettftext($img, 10, 0, 290, $y,$text, $font,$delivery['contact']);
+            imagettftext($img, 10, 0, 400, $y,$text, $font,$delivery['price']);
+            imagettftext($img, 10, 0, 510, $y,$text, $font,$delivery['price']+$delivery['fee']*1000);
+            imagettftext($img, 10, 0, 620, $y,$text, $font,$etat[$delivery['stat']]);
+            imagettftext($img, 10, 0, 720, $y,$text, $font,$delivery['observation']);
             $y+=20;
         }
         imagefilledrectangle ($img, 0, $y-15, 994, $y+65,$back);
-        imagettftext($img, 10, 0, 10, $y,$text, $font,"Total frais : ".$frais." Ar");
-        $y+=20;
-        imagettftext($img, 10, 0, 10, $y,$text, $font,"Total prix : ".$prix." Ar");
-        $y+=20;
         imagettftext($img, 10, 0, 10, $y,$text, $font,"Total : ".($prix+$frais)." Ar");
         header("Content-Type: image/png");
         imagepng($img);
