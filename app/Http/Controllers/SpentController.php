@@ -11,7 +11,13 @@ use Inertia\Response;
 class   SpentController extends Controller
 {
     function save(Request $request){
-        return Spent::create(json_decode($request->getContent(),true));
+        try {
+             return Spent::create(json_decode($request->getContent(),true));
+        }catch (\Exception){
+            $resp=new \Illuminate\Http\Response();
+            $resp->setStatusCode(406);
+            return $resp;
+        }
     }
     function update(Request $request){
         $arr=json_decode($request->getContent(),true);

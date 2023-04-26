@@ -14,7 +14,7 @@ export default function Deliveries({providers,delivers}){
     const urlsearch=new URLSearchParams(new URL(window.location.href).search);
     const submit=(event)=>{
         event.preventDefault();
-        var modal = document.getElementById("myModal");
+        let modal = document.getElementById("myModal");
         modal.style.display="block";
         axios.post("/deliveries?tk="+localStorage.getItem("tk"),delivery)
             .then(response=>{
@@ -23,7 +23,10 @@ export default function Deliveries({providers,delivers}){
                         alert("No provider found");
                     }else if(response.status===201){
                         alert("Delvery created");
-                        location.reload();
+                        let href=window.location.href;
+                        href=href.replace(new RegExp("#MN[0-9]*"),"");
+                        href=href.replace("#form","");
+                        window.location.href=href+"#"+delivery.provider;
                     }else{
                         alert("Error was found");
                     }
