@@ -181,7 +181,7 @@ class DeliveryController extends Controller
         $font="assets/fonts/arial.ttf";
         imagettftext($img, 15, 0, 10, 20,$text_colour, $font,$data["ref"]);
         imagettftext($img, 15, 0, 10, 55,$text_colour, $font,$data["surname"]." ".$data["name"]);
-        imagettftext($img, 15, 0, 10, 95,$text_colour, $font,$data["contact"]." ".$data["recovery"]);
+        imagettftext($img, 15, 0, 10, 95,$text_colour, $font,$data["recovery"]);
         imagefilledrectangle ($img, 0, 100, 994, 130, $back);
         imagettftext($img, 11, 0, 10, 120,$text, $font,"Ref");
         imagettftext($img, 11, 0, 50, 120,$text, $font,"Lieu");
