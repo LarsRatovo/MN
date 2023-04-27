@@ -23,7 +23,7 @@ Route::middleware(\App\Http\Middleware\TokenFilter::class)->group(function () {
     Route::get("/providers", [\App\Http\Controllers\ProviderController::class, "all"]);
     Route::post("/providers", [\App\Http\Controllers\ProviderController::class, "save"]);
     Route::put("/providers", [\App\Http\Controllers\ProviderController::class, "update"]);
-    Route::post("/providers/name", [\App\Http\Controllers\ProviderController::class, "search"]);
+    Route::post("/providers/search", [\App\Http\Controllers\ProviderController::class, "search"]);
     Route::put("/deliveries", [\App\Http\Controllers\DeliveryController::class, "update"]);
     Route::post("/deliveries", [\App\Http\Controllers\DeliveryController::class, "save"]);
     Route::get("/deliveries", [\App\Http\Controllers\DeliveryController::class, "provider_deliveries"]);
