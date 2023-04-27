@@ -3,6 +3,7 @@ import {useState} from "react";
 import {Head} from "@inertiajs/react";
 
 export default function Providers({providers}) {
+    const [data,setData]=useState(providers);
     const [provider,setProvider]=useState({});
     const update=(provider,name,value)=>{
         var modal = document.getElementById("myModal");
@@ -20,7 +21,7 @@ export default function Providers({providers}) {
         });
     }
     const submit=(event)=>{
-        var modal = document.getElementById("myModal");
+        let modal = document.getElementById("myModal");
         modal.style.display="block";
         event.preventDefault();
         console.log(JSON.stringify(provider));
@@ -28,6 +29,16 @@ export default function Providers({providers}) {
                 modal.style.display="none";
                 location.reload();
         }
+        );
+    };
+    const search=(event)=>{
+        let modal = document.getElementById("myModal");
+        modal.style.display="block";
+        event.preventDefault();
+        axios.post("/providers/search?tk="+localStorage.getItem("tk")+"&name="+event.target.name.value,provider).then(response=>{
+                modal.style.display="none";
+                setData(response.data);
+            }
         );
     }
     return (
@@ -51,7 +62,19 @@ export default function Providers({providers}) {
                             <label className="form-label livreures">&nbsp;
                                 <input type="text" className="field" name={"contact"} placeholder="Contact" onChange={set}/>
                                 <input type="text" className="field" name={"recovery"} placeholder="Lieu de recuperation" onChange={set}/>
-                            <button className="btn btn-primary btn-save" type="submit" onClick={(event)=>{this.disabled=true}}>Sauvegarde</button>
+                            <button className="btn btn-primary btn-save" type="submit">Sauvegarde</button>
+                            </label>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div className="row">
+                    <form onSubmit={search}>
+                    <div className="col-md-6 col-xl-12 text-nowrap d-xl-flex justify-content-xl-center align-items-xl-center">
+                        <div className="d-flex contain">
+                            <label className="form-label d-flex livreures">&nbsp;
+                                <input type="text" className="field" name={"name"} placeholder="Nom,Prenom,Ref,Recup..." onChange={set}/>
+                                <button className="btn btn-primary btn-save" type="submit">Filtrer</button>
                             </label>
                         </div>
                     </div>
@@ -71,7 +94,7 @@ export default function Providers({providers}) {
                         </thead>
                         <tbody className="liste-table">
                         {
-                            providers.map(provider=>
+                            data.map(provider=>
                                 <tr>
                                     <td>{provider.ref}</td>
                                     <td contentEditable={true} onBlur={(event)=>update(provider,'surname',event.target.innerHTML)}>{provider.surname}</td>

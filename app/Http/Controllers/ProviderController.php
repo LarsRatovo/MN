@@ -20,6 +20,7 @@ class ProviderController extends Controller
     }
     public function search(Request $request){
         $name="%".$request->get("name")."%";
+        error_log("Name is ".$name);
         return Provider::where("name","ilike",$name)->orWhere("surname","ilike",$name)->orWhere("ref","ilike",$name)->orWhere("recovery","ilike",$name)->get();
     }
     public function update(Request $request){
