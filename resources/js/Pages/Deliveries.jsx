@@ -36,7 +36,7 @@ export default function Deliveries({providers,delivers}){
     }
     const changeprovider=(event)=>{
         let {name,value}=event.target;
-        axios.post("/providers/name?name="+value+"&tk="+localStorage.getItem("tk")).
+        axios.post("/providers/search?name="+value+"&tk="+localStorage.getItem("tk")).
         then(result=>{
             let ul=document.createElement("ul");
             ul.className="suggestion";
