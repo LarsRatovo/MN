@@ -104,7 +104,7 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                 </tr>
                     <td>{fee}</td>
                     <td>{price}</td>
-                    <td>{fee+price}</td>
+                    <td>{parseInt(fee)+parseInt(price)}</td>
             </table>
         );
     }
