@@ -32,7 +32,7 @@ export default function DeliverReport({delivers,deliver,deliveries,date}){
                             <form action={"/report/deliver"} method={"post"}>
                             <div className="d-flex contain">
                                 <label className="form-label d-flex livreures">
-                                    <input className="field" type="date" defaultValue={date} onChange={(event)=>{window.location="/report/deliver?date="+event.target.value+"&tk="+localStorage.getItem("tk")}} name={"date"}/>
+                                    <input className="field" type="date" defaultValue={date} onBlur={(event)=>{window.location="/report/deliver?date="+event.target.value+"&tk="+localStorage.getItem("tk")}} name={"date"}/>
                                     <input type={"hidden"} name={"tk"} value={localStorage.getItem("tk")}/>
                                     &nbsp;
                                     <select className="field" name={"id"}>

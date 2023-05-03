@@ -136,7 +136,7 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'price',event.target.innerHTML)}>{delivery.price}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'fee',event.target.innerHTML)}>{delivery.fee}</td>
                             <td>{parseInt(delivery.price) + (parseInt(delivery.fee)*1000)}</td>
-                            <td><input type={"datetime-local"} defaultValue={delivery.date_delivery} onChange={(event)=>{report(delivery,event.target.value)}}/></td>
+                            <td><input type={"datetime-local"} defaultValue={delivery.date_delivery} onBlur={(event)=>{report(delivery,event.target.value)}}/></td>
                             <td>{delivery.type}</td>
                             <td><select onChange={(event)=>update(delivery,'deliver',event.target.value)}>
                                 <option>Deliver</option>
