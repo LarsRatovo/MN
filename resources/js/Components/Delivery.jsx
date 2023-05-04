@@ -31,6 +31,7 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
         axios.put("/deliveries?tk="+localStorage.getItem("tk"), delivery).
         then(response=>{
             modal.style.display="none";
+            window.location.reload();
         });
     }
     const updateState=(delivery,value,select)=>{
