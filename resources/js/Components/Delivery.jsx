@@ -61,6 +61,8 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                 date_delivery:date
             }
             copy["provider"]=provider.ref;
+            copy["observation"]='Retour du '+delivery.date_delivery;
+            delete copy.deliver;
             axios.post("/deliveries?tk="+localStorage.getItem("tk"),copy)
                 .then(response=>{
                         if(response.status===401){

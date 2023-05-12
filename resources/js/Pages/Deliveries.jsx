@@ -174,7 +174,7 @@ export default function Deliveries({providers,delivers}){
                             </nav>
                             <div className="d-flex contain">
                                 <label className="form-label d-flex livreures">&nbsp;
-                                    <input className="field" type="date" value={urlsearch.get("date")} onBlur={changeDate}/>
+                                    <input className="field" type="date" defaultValue={urlsearch.get("date")} onBlur={changeDate}/>
                                 </label>
                             </div>
                             <div className="d-flex contain">
