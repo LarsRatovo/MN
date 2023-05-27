@@ -141,7 +141,7 @@ export default function Deliveries({providers,delivers}){
                                                 </div>
                                                 <div className="col-md-3">
                                                     <div>
-                                                        <input className="form-control" type="text" inputMode="numeric" name={"price"} onChange={change} placeholder="Prix"/>
+                                                        <input className="form-control" type="text" inputMode="numeric" name={"price"} onChange={change} placeholder="Total"/>
                                                         <input className="form-control" type="text" placeholder="Frais" name={"fee"} onChange={change} inputMode="numeric"/></div>
                                                 </div>
                                                 <div className="col-md-3">

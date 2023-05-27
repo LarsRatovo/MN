@@ -146,7 +146,7 @@ class DeliveryController extends Controller
             $this->fpdf->Cell(60,10,$delivery['place'],1);
             $this->fpdf->Cell(15,10,date("H:i",strtotime($delivery['date_delivery'])),1);
             $this->fpdf->Cell(25,10,$delivery['contact'],1);
-            $this->fpdf->Cell(20,10,$delivery['price']+$delivery['fee'],1);
+            $this->fpdf->Cell(20,10,$delivery['price'],1);
             $this->fpdf->Cell(40,10,$delivery['observation'],1);
             $this->fpdf->Ln();
         }
@@ -192,7 +192,7 @@ class DeliveryController extends Controller
         $frais=0;
         $prix=0;
         foreach ($data["deliveries"] as $delivery){
-            $prix+=$delivery['price'];
+            $prix+=$delivery['price']-($delivery['fee']*1000);
             if($delivery['stat']==1||$delivery['stat']==3){
                 $frais+=($delivery['fee']*1000);
             }
@@ -200,8 +200,8 @@ class DeliveryController extends Controller
             imagettftext($img, 10, 0, 10, $y,$text, $font,$delivery['ref']);
             imagettftext($img, 10, 0, 100, $y,$text, $font,$delivery['place']);
             imagettftext($img, 10, 0, 290, $y,$text, $font,$delivery['contact']);
-            imagettftext($img, 10, 0, 400, $y,$text, $font,$delivery['price']);
-            imagettftext($img, 10, 0, 510, $y,$text, $font,$delivery['price']+$delivery['fee']*1000);
+            imagettftext($img, 10, 0, 400, $y,$text, $font,$delivery['price']-($delivery['fee']*1000));
+            imagettftext($img, 10, 0, 510, $y,$text, $font,$delivery['price']);
             imagettftext($img, 10, 0, 620, $y,$text, $font,$etat[$delivery['stat']]);
             imagettftext($img, 10, 0, 720, $y,$text, $font,$delivery['observation']);
             $y+=20;

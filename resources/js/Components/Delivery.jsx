@@ -94,9 +94,11 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
     const sum=()=>{
         let fee=0;
         let price=0;
+        let sum=0;
         deliveries.forEach((d)=>{
             fee+=(parseInt(d.fee)*1000);
-            price+=parseInt(d.price);
+            price+=(parseInt(d.price)-(parseInt(d.fee)*1000));
+            sum+=(parseInt(d.price));
         })
         return (
             <table>
@@ -107,7 +109,7 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                 </tr>
                     <td>{fee}</td>
                     <td>{price}</td>
-                    <td>{parseInt(fee)+parseInt(price)}</td>
+                    <td>{sum}</td>
             </table>
         );
     }
@@ -136,9 +138,9 @@ export default function Delivery({deliveries, delivers,autofill,provider}) {
                             <td onClick={(event)=> autofill(event,provider,delivery.date_delivery)} onDoubleClick={(event)=>remove(event,delivery)} style={{cursor:"pointer"}}>{delivery.ref}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'place',event.target.innerHTML)}>{delivery.place}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'contact',event.target.innerHTML)}>{delivery.contact}</td>
-                            <td contentEditable={true} onBlur={(event)=>update(delivery,'price',event.target.innerHTML)}>{delivery.price}</td>
+                            <td>{parseInt(delivery.price) - (parseInt(delivery.fee)*1000)}</td>
                             <td contentEditable={true} onBlur={(event)=>update(delivery,'fee',event.target.innerHTML)}>{delivery.fee}</td>
-                            <td>{parseInt(delivery.price) + (parseInt(delivery.fee)*1000)}</td>
+                            <td contentEditable={true} onBlur={(event)=>update(delivery,'price',event.target.innerHTML)}>{delivery.price}</td>
                             <td><input type={"datetime-local"} defaultValue={delivery.date_delivery} onBlur={(event)=>{report(delivery,event.target.value)}}/></td>
                             <td>{delivery.type}</td>
                             <td><select onChange={(event)=>update(delivery,'deliver',event.target.value)}>

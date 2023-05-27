@@ -76,7 +76,7 @@
         UNION
         SELECT 0 fee,price,0 spent, date FROM price;
 
-    CREATE VIEW report AS
-        SELECT SUM(fee) fee,SUM(price) price,SUM(spent) spent,SUM(fee)-SUM(spent) stayed,date FROM pre_report GROUP BY date;
+    CREATE OR REPLACE VIEW report AS
+        SELECT SUM(fee) fee,SUM(price)-SUM(fee) price,SUM(spent) spent,SUM(fee)-SUM(spent) stayed,date FROM pre_report GROUP BY date;
 
         INSERT INTO users(username,password) VALUES ('MNLivraisonAmbotra123',md5('zDKWSXevE$)IHQnR'));
