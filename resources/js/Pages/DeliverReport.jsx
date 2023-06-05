@@ -1,8 +1,6 @@
 import Sidebar from "@/Layouts/Sidebar";
 import {Head} from "@inertiajs/react";
-import Deliveries from "@/Pages/Deliveries";
 import Delivery from "@/Components/Delivery";
-import axios from "axios";
 
 export default function DeliverReport({delivers,deliver,deliveries,date}){
     const show=()=>{
